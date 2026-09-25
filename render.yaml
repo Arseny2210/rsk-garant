@@ -9,19 +9,12 @@ services:
     envVars:
       - key: HOST
         value: 0.0.0.0
-        sync: false
-      - key: PORT
-        sync: false
-      # Обязательно укажите URL вашего приложения на Render,
-      # иначе форма будет отклоняться проверкой Origin.
-      # Пример: https://rsk-garant.onrender.com
+      # Укажите URL вашего приложения на Render, иначе форма будет
+      # отклоняться проверкой Origin. Пример: https://rsk-garant.onrender.com
       - key: ALLOWED_ORIGINS
         value: https://rsk-garant.ru
-        sync: false
-      # MAX-интеграция. Без токена заявки не отправляются (честная ошибка).
       - key: MAX_API_BASE
         value: https://platform-api2.max.ru/
-        sync: false
       - key: MAX_BOT_TOKEN
         sync: false
       - key: MAX_CHAT_ID
