@@ -1,0 +1,64 @@
+---
+import { company } from '../data/company';
+import { mainServices, additionalServices } from '../data/services';
+
+const year = new Date().getFullYear();
+const address = company.address !== '[ADDRESS]' ? company.address : '';
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="logo" href="/" aria-label="РСК Гарант — на главную">
+          <span class="logo__mark" aria-hidden="true"></span>
+          <span class="logo__name">{company.name}</span>
+        </a>
+        <p>Ремонт квартир и отдельные строительные работы в Москве и Московской области.</p>
+      </div>
+
+      <nav aria-label="Основные услуги">
+        <h3>Услуги</h3>
+        <ul>
+          {
+            mainServices.map((s) => (
+              <li><a href={s.slug}>{s.title}</a></li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav aria-label="Дополнительные работы">
+        <h3>Также выполняем</h3>
+        <ul>
+          {
+            additionalServices.slice(0, 8).map((s) => (
+              <li><a href={'/#additional'}>{s.title}</a></li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <h3>Контакты</h3>
+        <ul>
+          <li><a href={company.phoneHref}>{company.phone}</a></li>
+          <li><a href={company.phoneAltHref}>{company.phoneAlt}</a></li>
+          <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
+          {address && <li>{address}</li>}
+          <li>{company.cityNominative} и {company.region}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© {year} {company.name}</span>
+      <nav aria-label="Служебные ссылки">
+        <ul style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+          <li><a href="/privacy/">Политика конфиденциальности</a></li>
+          <li><a href="/#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>

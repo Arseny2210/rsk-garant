@@ -1,0 +1,36 @@
+---
+import { company } from '../data/company';
+
+const address = company.address !== '[ADDRESS]' ? company.address : '';
+---
+
+<section class="section section--soft" id="contacts" aria-labelledby="contacts-title">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-head__label">Контакты</div>
+        <h2 id="contacts-title">Свяжитесь с нами</h2>
+      </div>
+    </div>
+
+    <div class="contacts-grid">
+      <div class="contact-card">
+        <div class="label">Телефон</div>
+        <a href={company.phoneHref}>{company.phone}</a>
+        <div class="sub"><a href={company.phoneAltHref}>{company.phoneAlt}</a></div>
+      </div>
+
+      <div class="contact-card">
+        <div class="label">Почта</div>
+        <a href={`mailto:${company.email}`}>{company.email}</a>
+        <div class="sub">Пришлите описание задачи и фото — подготовим расчет.</div>
+      </div>
+
+      <div class="contact-card">
+        <div class="label">Регион работ</div>
+        <span class="value">{company.cityNominative} и {company.region}</span>
+        {address && <div class="sub">{address}</div>}
+      </div>
+    </div>
+  </div>
+</section>

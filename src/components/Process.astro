@@ -1,0 +1,36 @@
+---
+
+const steps = [
+  { title: 'Заявка', text: 'Вы описываете задачу на сайте или по телефону.' },
+  { title: 'Обсуждение', text: 'Уточняем детали и отвечаем на вопросы.' },
+  { title: 'Оценка объекта', text: 'Приезжаем на осмотр и делаем замеры.' },
+  { title: 'Расчет', text: 'Готовим предварительную смету по работам и материалам.' },
+  { title: 'Согласование', text: 'Фиксируем объем и стоимость в договоре.' },
+  { title: 'Сдача', text: 'Передаем результат, проверяем качество вместе.' },
+];
+---
+
+<section class="section" id="process" aria-labelledby="process-title">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-head__label">Процесс</div>
+        <h2 id="process-title">Как мы работаем</h2>
+        <p>Понятный процесс от заявки до сдачи объекта.</p>
+      </div>
+    </div>
+
+    <div class="process">
+      <ol class="process__list">
+        {
+          steps.map((step) => (
+            <li class="process__step">
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

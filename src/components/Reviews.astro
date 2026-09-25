@@ -1,0 +1,35 @@
+---
+import { reviews } from '../data/reviews';
+
+const hasReviews = reviews.length > 0;
+---
+
+{
+  hasReviews && (
+    <section class="section section--soft" id="reviews" aria-labelledby="reviews-title">
+      <div class="container">
+        <div class="sec-head">
+          <div>
+            <div class="sec-head__label">Отзывы</div>
+            <h2 id="reviews-title">Что говорят клиенты</h2>
+            <p>Реальные отзывы о выполненных работах.</p>
+          </div>
+        </div>
+
+        <div class="reviews-grid">
+          {
+            reviews.map((r) => (
+              <figure class="review-card">
+                <blockquote>{r.text}</blockquote>
+                <figcaption>
+                  <span class="review-card__name">{r.name}</span>
+                  {r.service && <span class="review-card__service">{r.service}</span>}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  )
+}

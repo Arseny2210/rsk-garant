@@ -1,0 +1,136 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileBottomBar from '../components/MobileBottomBar.astro';
+import { company, SITE_URL } from '../data/company';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  jsonLd?: object[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/images/og/og-default.webp',
+  jsonLd = [],
+  noindex = false,
+} = Astro.props;
+
+const url = new URL(Astro.url.pathname, SITE_URL).toString();
+const canonical = url.endsWith('/') ? url : url + '/';
+
+const breadcrumbDefault = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: SITE_URL + '/' },
+  ],
+};
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': SITE_URL + '/#organization',
+  name: company.name,
+  url: SITE_URL,
+  telephone: company.phone.replace(/[^+\d]/g, ''),
+  email: company.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: company.cityNominative,
+    addressRegion: company.region,
+    streetAddress: company.address !== '[ADDRESS]' ? company.address : undefined,
+  },
+  areaServed: [company.cityNominative, company.region],
+  image: SITE_URL + image,
+  priceRange: '₽₽',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': SITE_URL + '/#website',
+  name: company.name,
+  url: SITE_URL,
+  inLanguage: 'ru',
+};
+
+const allJsonLd = [breadcrumbDefault, orgSchema, websiteSchema, ...jsonLd];
+---
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <meta name="theme-color" content="#f5f3ee" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- OpenGraph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:site_name" content={company.name} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={SITE_URL + image} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={SITE_URL + image} />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <meta name="yandex-verification" content="" />
+
+  {allJsonLd.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <slot name="header">
+    <Header />
+  </slot>
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <Footer />
+
+  <MobileBottomBar />
+
+  <dialog class="lightbox" id="lightbox" aria-label="Просмотр фотографии">
+    <div class="lightbox__bar">
+      <span class="lightbox__caption" id="lightbox-caption"></span>
+      <button class="lightbox__close" type="button" data-lightbox-close aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+    <figure class="lightbox__stage">
+      <img id="lightbox-img" src="" alt="" />
+      <div class="lightbox__ba" id="lightbox-ba" hidden>
+        <button class="is-active" type="button" data-lb="after">После</button>
+        <button type="button" data-lb="before">До</button>
+      </div>
+    </figure>
+  </dialog>
+
+  <script src="/src/scripts/main.js"></script>
+</body>
+</html>

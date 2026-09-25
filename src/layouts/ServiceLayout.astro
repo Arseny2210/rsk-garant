@@ -1,0 +1,300 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FormSection from '../components/FormSection.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { company, SITE_URL } from '../data/company';
+import { getMainService } from '../data/services';
+import { serviceExamples } from '../data/examples';
+
+interface Props {
+  serviceId: string;
+}
+
+const { serviceId } = Astro.props;
+const service = getMainService(serviceId);
+
+if (!service) {
+  throw new Error(`Service not found: ${serviceId}`);
+}
+
+const pageTitle = service.seoTitle;
+const pageDescription = service.metaDescription;
+const pageUrl = SITE_URL + service.slug;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: SITE_URL + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Услуги', item: SITE_URL + '/#services' },
+    { '@type': 'ListItem', position: 3, name: service.title, item: pageUrl },
+  ],
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': pageUrl + '#service',
+  name: service.title,
+  url: pageUrl,
+  serviceType: service.title,
+  description: service.metaDescription,
+  image: SITE_URL + service.image,
+  areaServed: [company.cityNominative, company.region],
+  provider: { '@id': SITE_URL + '/#organization' },
+  offers: {
+    '@type': 'Offer',
+    availability: 'https://schema.org/InStock',
+    priceSpecification: {
+      '@type': 'PriceSpecification',
+      priceCurrency: 'RUB',
+      description: 'Стоимость рассчитывается после оценки объекта',
+    },
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: service.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const related = service.related
+  .map((id) => getMainService(id))
+  .filter((s): s is NonNullable<typeof s> => Boolean(s));
+
+const examples = serviceExamples[service.id] || [];
+const breadcrumbItems = [
+  { name: 'Услуги', href: '/#services' },
+  { name: service.title },
+];
+const ogImage = '/images/og/og-' + service.slug.replace(/\//g, '') + '.webp';
+const ctaLower = service.ctaLabel.charAt(0).toLowerCase() + service.ctaLabel.slice(1);
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  image={ogImage}
+  jsonLd={[breadcrumbSchema, serviceSchema, faqSchema]}
+>
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>{service.h1}</h1>
+      <p class="lead">{service.subtitle}</p>
+      <div class="page-hero__cta">
+        <button class="btn btn--primary" type="button" data-open-form={service.title}>
+          Рассчитать стоимость
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+        <a class="btn btn--ghost" href="#examples">Посмотреть примеры</a>
+      </div>
+
+      <div class="hero__facts" aria-label="Преимущества услуги">
+        {
+          service.utp.map((u) => (
+            <div class="hero__fact">
+              <b>{u.title}</b>
+              <span>{u.text}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Описание услуги -->
+  <section class="section">
+    <div class="container">
+      <div class="content-block">
+        <div class="content-block__side">
+          <div class="kicker">Описание</div>
+          <h2>Что такое {service.title.toLowerCase()}</h2>
+        </div>
+        <div class="content-block__body">
+          <p>{service.intro}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Что входит -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="content-block">
+        <div class="content-block__side">
+          <div class="kicker">Состав работ</div>
+          <h2>{service.includesTitle}</h2>
+        </div>
+        <ul class="check-list">
+          {
+            service.includes.map((item) => (
+              <li>{item}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Виды работ -->
+  <section class="section">
+    <div class="container">
+      <div class="content-block">
+        <div class="content-block__side">
+          <div class="kicker">Направления</div>
+          <h2>{service.kindsTitle}</h2>
+        </div>
+        <div>
+          <ul class="num-list">
+            {
+              service.kinds.map((k) => (
+                <li>
+                  <div>
+                    <b>{k.title}</b>
+                    <span>{k.text}</span>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Примеры работ -->
+  {
+    examples.length > 0 && (
+      <section class="section section--soft" id="examples" aria-labelledby="examples-title">
+        <div class="container">
+          <div class="sec-head">
+            <div>
+              <div class="sec-head__label">Работы</div>
+              <h2 id="examples-title">Примеры выполненных работ</h2>
+              <p>Реальные объекты по разным направлениям ремонта и отделки.</p>
+            </div>
+          </div>
+          <div class="portfolio-grid">
+            {
+              examples.map((img, i) => (
+                <article
+                  class={'project-card reveal' + (i === 0 ? ' project-card--lg' : ' project-card--sm')}
+                >
+                  <div
+                    class="project-card__media"
+                    data-lightbox
+                    data-caption={`${service.title} — пример работы`}
+                  >
+                    <img src={img.src} alt={img.alt} loading="lazy" width="705" height="527" />
+                  </div>
+                  <div class="project-card__info">
+                    <div class="work-type">{service.title}</div>
+                    <h3>Пример работы на объекте</h3>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- От чего зависит стоимость -->
+  <section class="section">
+    <div class="container">
+      <div class="content-block">
+        <div class="content-block__side">
+          <div class="kicker">Расчет</div>
+          <h2>{service.costTitle}</h2>
+        </div>
+        <div>
+          <p>
+            Точную стоимость называем после осмотра объекта или по подробному описанию задачи и фотографиям.
+          </p>
+          <ul class="cost-list">
+            {
+              service.cost.map((item) => (
+                <li>{item}</li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Процесс -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <div class="sec-head__label">Процесс</div>
+          <h2>{service.stepsTitle}</h2>
+        </div>
+      </div>
+      <div class="process">
+        <ol class="process__list">
+          {
+            service.steps.map((step, i) => (
+              <li class="process__step">
+                <h3>{step}</h3>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Форма -->
+  <FormSection service={service.title} />
+
+  <!-- FAQ -->
+  <Faq items={service.faq} title={service.faqTitle} />
+
+  <!-- Связанные услуги -->
+  {
+    related.length > 0 && (
+      <section class="section" aria-labelledby="related-title">
+        <div class="container">
+          <div class="sec-head">
+            <div>
+              <div class="sec-head__label">Связанные услуги</div>
+              <h2 id="related-title">Может понадобиться</h2>
+            </div>
+          </div>
+          <div class="related-grid">
+            {
+              related.map((r) => (
+                <a class="related-card" href={r.slug}>
+                  <img src={r.image} alt={r.imageAlt} loading="lazy" width="705" height="527" />
+                  <h3>
+                    {r.title}
+                    <span class="arrow" aria-hidden="true">→</span>
+                  </h3>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Финальный CTA -->
+  <FinalCta
+    title={`Нужна помощь с ${ctaLower}?`}
+    text={`Расскажите о задаче — подготовим предварительный расчет и предложим удобное время для встречи.`}
+  />
+</BaseLayout>

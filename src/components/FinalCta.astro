@@ -1,0 +1,24 @@
+---
+interface Props {
+  title?: string;
+  text?: string;
+}
+const { title = 'Обсудим вашу задачу', text = 'Расскажите, что нужно сделать. Подготовим предварительный расчет и ответим на вопросы.' } = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class="final-cta__inner reveal">
+      <div>
+        <h2>{title}</h2>
+        <p>{text}</p>
+      </div>
+      <div class="final-cta__actions">
+        <button class="btn btn--accent" type="button" data-open-form>
+          Получить консультацию
+        </button>
+        <a class="btn btn--light" href="/#projects">Посмотреть работы</a>
+      </div>
+    </div>
+  </div>
+</section>

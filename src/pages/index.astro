@@ -1,0 +1,287 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Process from '../components/Process.astro';
+import WhyUs from '../components/WhyUs.astro';
+import Reviews from '../components/Reviews.astro';
+import AdditionalServices from '../components/AdditionalServices.astro';
+import FormSection from '../components/FormSection.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Contacts from '../components/Contacts.astro';
+import { company, SITE_URL } from '../data/company';
+import { mainServices } from '../data/services';
+import { projects } from '../data/projects';
+import { homeFaq } from '../data/faq';
+
+const title = 'Ремонт квартир в Москве и Московской области — РСК Гарант';
+const description =
+  'РСК Гарант — ремонт квартир под ключ и отдельные работы в Москве и Московской области. Бесплатная оценка, смета, работа по договору. Оставьте заявку.';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: homeFaq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const servicesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: mainServices.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Service',
+      name: s.title,
+      url: SITE_URL + s.slug,
+      serviceType: s.title,
+      areaServed: [company.cityNominative, company.region],
+      provider: { '@id': SITE_URL + '/#organization' },
+    },
+  })),
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  jsonLd={[servicesSchema, faqSchema]}
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div>
+        <div class="hero__badge">{company.name} — ремонтно-строительная компания</div>
+        <h1>Ремонт квартир и отдельные строительные работы в {company.city}</h1>
+        <p>
+          Выполняем ремонт под ключ, отделочные и строительные работы.
+          Поможем оценить объем работ и подготовить предварительный расчет.
+        </p>
+        <div class="hero__cta">
+          <button class="btn btn--primary" type="button" data-open-form>
+            Рассчитать стоимость
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </button>
+          <a class="btn btn--ghost" href="#projects">Посмотреть работы</a>
+        </div>
+
+        <div class="hero__facts" aria-label="Ключевые факты">
+          <div class="hero__fact">
+            <b>{company.cityNominative}</b>
+            <span>и {company.region}</span>
+          </div>
+          <div class="hero__fact">
+            <b>Бесплатно</b>
+            <span>выезд замерщика и оценка работ</span>
+          </div>
+          <div class="hero__fact">
+            <b>Договор</b>
+            <span>фиксируем стоимость до начала работ</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__media">
+        <img
+          src="/images/hero/hero-remont-kvartiry.webp"
+          alt="Комплексный ремонт квартиры, выполненный компанией РСК Гарант"
+          width="705"
+          height="812"
+          fetchpriority="high"
+          data-lightbox
+          data-caption="Ремонт квартиры под ключ — пример работы"
+        />
+        <div class="hero__chip">
+          <span class="dot" aria-hidden="true"></span>
+          Собственное производство натяжных потолков
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick facts -->
+  <section class="quickfacts" aria-label="Преимущества">
+    <div class="container">
+      <h2 class="sr-only">Преимущества</h2>
+      <div class="quickfacts__grid">
+        <div class="quickfacts__item">
+          <div class="quickfacts__num">01</div>
+          <h3>Оценка работ</h3>
+          <p>Выезд на объект, замеры и консультация специалиста.</p>
+        </div>
+        <div class="quickfacts__item">
+          <div class="quickfacts__num">02</div>
+          <h3>Составление сметы</h3>
+          <p>Предварительный расчет по работам и материалам.</p>
+        </div>
+        <div class="quickfacts__item">
+          <div class="quickfacts__num">03</div>
+          <h3>Работа по договору</h3>
+          <p>Стоимость фиксируется в договоре до начала работ.</p>
+        </div>
+        <div class="quickfacts__item">
+          <div class="quickfacts__num">04</div>
+          <h3>Связь с менеджером</h3>
+          <p>Отвечаем на вопросы и сопровождаем на всех этапах.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Основные услуги -->
+  <section class="section" id="services" aria-labelledby="services-title">
+    <div class="container">
+      <div class="sec-head sec-head--row">
+        <div>
+          <div class="sec-head__label">Услуги</div>
+          <h2 id="services-title">Основные направления ремонта</h2>
+          <p>Работы, которые выполняем чаще всего — подробнее о каждой на отдельной странице.</p>
+        </div>
+      </div>
+
+      <div class="services-grid">
+        {
+          mainServices.map((s, i) => (
+            <a
+              class="service-card reveal"
+              href={s.slug}
+              data-service-card={s.title}
+              aria-label={`${s.title} — подробнее`}
+            >
+              <div class="service-card__media">
+                <span class="service-card__num">{String(i + 1).padStart(2, '0')}</span>
+                <img src={s.image} alt={s.imageAlt} loading="lazy" width="640" height="400" />
+              </div>
+              <div class="service-card__body">
+                <h3>{s.title}</h3>
+                <p>{s.subtitle}</p>
+                <span class="service-card__link">
+                  Подробнее
+                  <span aria-hidden="true">→</span>
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Портфолио -->
+  <section class="section section--soft" id="projects" aria-labelledby="projects-title">
+    <div class="container">
+      <div class="sec-head sec-head--row">
+        <div>
+          <div class="sec-head__label">Работы</div>
+          <h2 id="projects-title">Наши работы</h2>
+          <p>Примеры выполненных работ по разным направлениям.</p>
+        </div>
+      </div>
+
+      <div class="portfolio-grid">
+        {
+          projects.slice(0, 6).map((p, i) => (
+            <article
+              class={'project-card reveal' + (i === 0 ? ' project-card--lg' : i === 1 ? ' project-card--sm' : '')}
+              data-portfolio
+            >
+              <div
+                class="project-card__media"
+                data-lightbox
+                data-caption={p.title}
+                data-before={p.before || undefined}
+                data-after={p.after || undefined}
+              >
+                {
+                  p.before && p.after ? (
+                    <>
+                      <img
+                        src={p.after}
+                        alt={p.alt}
+                        loading="lazy"
+                        width="609"
+                        height="400"
+                        data-ba-img
+                      />
+                    </>
+                  ) : (
+                    <img src={p.image} alt={p.alt} loading="lazy" width="705" height="527" />
+                  )
+                }
+                {
+                  p.before && p.after && (
+                    <div class="before-after" style="position:absolute; top:1rem; right:1rem; background:rgba(25,24,21,0.75); border-radius:4px;">
+                      <button
+                        class="is-active"
+                        type="button"
+                        data-src={p.after}
+                        data-alt={p.alt}
+                      >
+                        После
+                      </button>
+                      <button
+                        type="button"
+                        data-src={p.before}
+                        data-alt={'Комната до ремонта'}
+                      >
+                        До
+                      </button>
+                    </div>
+                  )
+                }
+              </div>
+              <div class="project-card__info">
+                <div class="work-type">{p.workType}</div>
+                <h3>{p.title}</h3>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Mid CTA -->
+  <section class="section" aria-label="Заявка">
+    <div class="container">
+      <div class="final-cta__inner reveal">
+        <div>
+          <h2>Расскажите, что нужно сделать</h2>
+          <p>Опишите задачу — поможем понять объем работ и подготовим предварительный расчет.</p>
+        </div>
+        <div class="final-cta__actions">
+          <button class="btn btn--accent" type="button" data-open-form>
+            Оставить заявку
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Дополнительные услуги -->
+  <AdditionalServices />
+
+  <!-- Как работаем -->
+  <Process />
+
+  <!-- Почему РСК Гарант -->
+  <WhyUs />
+
+  <!-- Отзывы (скрыт, пока нет реальных отзывов) -->
+  <Reviews />
+
+  <!-- Форма -->
+  <FormSection withServiceSelect />
+
+  <!-- FAQ -->
+  <Faq items={homeFaq} title="Частые вопросы" />
+
+  <!-- Финальный CTA -->
+  <FinalCta />
+
+  <!-- Контакты -->
+  <Contacts />
+</BaseLayout>

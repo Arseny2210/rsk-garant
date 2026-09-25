@@ -1,0 +1,66 @@
+---
+import { company } from '../data/company';
+
+const nav = [
+  { href: '/#services', label: 'Услуги' },
+  { href: '/#projects', label: 'Работы' },
+  { href: '/#about', label: 'О компании' },
+  { href: '/#process', label: 'Как работаем' },
+  { href: '/#contacts', label: 'Контакты' },
+];
+---
+
+<header class="site-header">
+  <div class="container header__inner">
+    <a class="logo" href="/" aria-label="РСК Гарант — на главную">
+      <span class="logo__mark" aria-hidden="true"></span>
+      <span class="logo__name">{company.name}</span>
+    </a>
+
+    <nav class="header__nav" aria-label="Основная навигация">
+      <ul>
+        {
+          nav.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <a class="header__phone" href={company.phoneHref}>{company.phone}</a>
+      <button class="btn btn--primary btn--sm" data-open-form type="button">
+        Оставить заявку
+      </button>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Открыть меню"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <nav aria-label="Мобильная навигация">
+      <ul>
+        {
+          nav.map((item) => (
+            <li><a class="nav-link" href={item.href}>{item.label}</a></li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="mobile-menu__actions">
+      <button class="btn btn--primary" data-open-form type="button">Оставить заявку</button>
+      <a class="btn btn--ghost" href={company.phoneHref}>Позвонить</a>
+    </div>
+    <div class="mobile-menu__contacts">
+      <a href={company.phoneHref}>{company.phone}</a>
+      <a href={`mailto:${company.email}`}>{company.email}</a>
+    </div>
+  </div>
+</header>

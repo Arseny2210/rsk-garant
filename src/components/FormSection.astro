@@ -1,0 +1,28 @@
+---
+import { company } from '../data/company';
+import LeadForm from './LeadForm.astro';
+
+interface Props {
+  service?: string;
+  withServiceSelect?: boolean;
+}
+const { service = '', withServiceSelect = false } = Astro.props;
+---
+
+<section class="form-section section" id="form" aria-labelledby="form-title">
+  <div class="container form-layout">
+    <div class="form-intro">
+      <div class="sec-head__label">Заявка</div>
+      <h2 id="form-title">Расскажите, что нужно сделать</h2>
+      <p>
+        Опишите задачу — мы подготовим предварительный расчет и предложим удобное время для встречи.
+      </p>
+      <div class="form-intro__contacts">
+        <a href={company.phoneHref}>{company.phone}</a>
+        <a href={company.phoneAltHref}>{company.phoneAlt}</a>
+        <a href={`mailto:${company.email}`}>{company.email}</a>
+      </div>
+    </div>
+    <LeadForm service={service} withServiceSelect={withServiceSelect} />
+  </div>
+</section>

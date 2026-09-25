@@ -1,0 +1,30 @@
+---
+import type { FaqItem } from '../data/services';
+
+interface Props {
+  items: FaqItem[];
+  title?: string;
+}
+const { items, title = 'Частые вопросы' } = Astro.props;
+---
+
+<section class="section" id="faq" aria-label={title}>
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-head__label">FAQ</div>
+        <h2>{title}</h2>
+      </div>
+    </div>
+    <div class="faq-list">
+      {
+        items.map((item) => (
+          <details class="faq-item" name="faq">
+            <summary>{item.q}</summary>
+            <div class="faq-item__body">{item.a}</div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

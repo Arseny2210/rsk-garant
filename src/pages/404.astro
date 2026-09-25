@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Страница не найдена — РСК Гарант';
+const description = 'Страница не существует. Перейдите на главную или посмотрите услуги.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  noindex={true}
+>
+  <section class="notfound">
+    <div class="container">
+      <div class="code">404</div>
+      <h1>Похоже, этой страницы не существует</h1>
+      <p>Возможно, она была перемещена или удалена. Посмотрите наши услуги или вернитесь на главную.</p>
+      <div class="notfound__actions">
+        <a class="btn btn--primary" href="/">На главную</a>
+        <a class="btn btn--ghost" href="/#services">Посмотреть услуги</a>
+        <button class="btn btn--accent" type="button" data-open-form>Оставить заявку</button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
