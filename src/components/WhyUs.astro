@@ -38,10 +38,10 @@ const reasons = [
       </div>
     </div>
 
-    <div class="why-grid">
+    <div class="why-grid reveal-stagger">
       {
         reasons.map((r, i) => (
-          <article class="why-item reveal">
+          <article class="why-item">
             <div class="why-item__num">{String(i + 1).padStart(2, '0')}</div>
             <h3>{r.title}</h3>
             <p>{r.text}</p>

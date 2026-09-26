@@ -107,7 +107,7 @@ const servicesSchema = {
   <section class="quickfacts" aria-label="Преимущества">
     <div class="container">
       <h2 class="sr-only">Преимущества</h2>
-      <div class="quickfacts__grid">
+      <div class="quickfacts__grid reveal-stagger">
         <div class="quickfacts__item">
           <div class="quickfacts__num">01</div>
           <h3>Оценка работ</h3>
@@ -143,11 +143,11 @@ const servicesSchema = {
         </div>
       </div>
 
-      <div class="services-grid">
+      <div class="services-grid reveal-stagger">
         {
           mainServices.map((s, i) => (
             <a
-              class="service-card reveal"
+              class="service-card"
               href={s.slug}
               data-service-card={s.title}
               aria-label={`${s.title} — подробнее`}
@@ -183,11 +183,11 @@ const servicesSchema = {
         </div>
       </div>
 
-      <div class="portfolio-grid">
+      <div class="portfolio-grid reveal-stagger">
         {
           projects.slice(0, 6).map((p, i) => (
             <article
-              class={'project-card reveal' + (i === 0 ? ' project-card--lg' : i === 1 ? ' project-card--sm' : '')}
+              class={'project-card' + (i === 0 ? ' project-card--lg' : i === 1 ? ' project-card--sm' : '')}
               data-portfolio
             >
               <div

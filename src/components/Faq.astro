@@ -16,7 +16,7 @@ const { items, title = 'Частые вопросы' } = Astro.props;
         <h2>{title}</h2>
       </div>
     </div>
-    <div class="faq-list">
+    <div class="faq-list reveal-stagger">
       {
         items.map((item) => (
           <details class="faq-item" name="faq">

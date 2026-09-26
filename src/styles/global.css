@@ -2443,11 +2443,101 @@ input[type="number"] {
 }
 
 /* ---------- reveal animation ---------- */
-.reveal {
+.js .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  filter: blur(6px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease), filter 0.8s var(--ease);
+  transform: translateY(22px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.js .sec-head {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.js .sec-head.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* каскадное появление элементов сетки */
+@keyframes rskFadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes rskFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.js .reveal-stagger > * {
+  opacity: 0;
+  animation: rskFadeUp 0.75s var(--ease) forwards paused;
+}
+
+.js .reveal-stagger > *:nth-child(1) { animation-delay: 0s; }
+.js .reveal-stagger > *:nth-child(2) { animation-delay: 0.08s; }
+.js .reveal-stagger > *:nth-child(3) { animation-delay: 0.16s; }
+.js .reveal-stagger > *:nth-child(4) { animation-delay: 0.24s; }
+.js .reveal-stagger > *:nth-child(5) { animation-delay: 0.32s; }
+.js .reveal-stagger > *:nth-child(6) { animation-delay: 0.4s; }
+.js .reveal-stagger > *:nth-child(7) { animation-delay: 0.48s; }
+.js .reveal-stagger > *:nth-child(8) { animation-delay: 0.56s; }
+.js .reveal-stagger > *:nth-child(9) { animation-delay: 0.64s; }
+.js .reveal-stagger > *:nth-child(10) { animation-delay: 0.72s; }
+
+.js .reveal-stagger.is-visible > * {
+  animation-play-state: running;
+}
+
+/* входной экран */
+@keyframes rskHeroUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+
+.js .hero__badge { animation: rskHeroUp 0.7s var(--ease) both; animation-delay: 0.05s; }
+.js .hero h1 { animation: rskHeroUp 0.8s var(--ease) both; animation-delay: 0.12s; }
+.js .hero p { animation: rskHeroUp 0.8s var(--ease) both; animation-delay: 0.22s; }
+.js .hero__cta { animation: rskHeroUp 0.8s var(--ease) both; animation-delay: 0.32s; }
+.js .hero__facts { animation: rskHeroUp 0.8s var(--ease) both; animation-delay: 0.45s; }
+.js .hero__media { animation: rskHeroUp 0.9s var(--ease) both; animation-delay: 0.18s; }
+
+.js .page-hero h1 { animation: rskHeroUp 0.8s var(--ease) both; }
+.js .page-hero .lead { animation: rskHeroUp 0.8s var(--ease) both; animation-delay: 0.1s; }
+.js .page-hero__price { animation: rskHeroUp 0.8s var(--ease) both; animation-delay: 0.18s; }
+.js .page-hero__cta { animation: rskHeroUp 0.8s var(--ease) both; animation-delay: 0.26s; }
+.js .page-hero .hero__facts { animation: rskHeroUp 0.8s var(--ease) both; animation-delay: 0.38s; }
+
+.js .breadcrumbs { animation: rskFadeIn 0.6s var(--ease) both; }
+
+/* модалки и лайтбокс */
+@keyframes rskModalIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes rskBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal[open] { animation: rskModalIn 0.32s var(--ease); }
+.modal[open]::backdrop { animation: rskBackdropIn 0.3s var(--ease); }
+
+.lightbox[open] { animation: rskFadeIn 0.25s var(--ease); }
+.lightbox[open]::backdrop { animation: rskBackdropIn 0.25s var(--ease); }
+.lightbox[open] img { animation: rskModalIn 0.35s var(--ease); }
+
+/* якоря не перекрываются шапкой */
+section[id] {
+  scroll-margin-top: calc(var(--header-h) + 1rem);
 }
 
 .reveal.is-visible {
@@ -2656,9 +2746,33 @@ input[type="number"] {
     transition-duration: 0.01ms !important;
   }
 
-  .reveal {
-    opacity: 1;
-    transform: none;
-    filter: none;
+  .js .reveal,
+  .js .sec-head {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .js .reveal-stagger > * {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  .js .hero__badge,
+  .js .hero h1,
+  .js .hero p,
+  .js .hero__cta,
+  .js .hero__facts,
+  .js .hero__media,
+  .js .page-hero h1,
+  .js .page-hero .lead,
+  .js .page-hero__price,
+  .js .page-hero__cta,
+  .js .page-hero .hero__facts,
+  .js .breadcrumbs,
+  .modal[open],
+  .lightbox[open] {
+    animation: none !important;
+    opacity: 1 !important;
   }
 }

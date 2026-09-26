@@ -193,11 +193,11 @@ const ctaLower = service.ctaLabel.charAt(0).toLowerCase() + service.ctaLabel.sli
               <p>Реальные объекты по разным направлениям ремонта и отделки.</p>
             </div>
           </div>
-          <div class="portfolio-grid">
+          <div class="portfolio-grid reveal-stagger">
             {
               examples.map((img, i) => (
                 <article
-                  class={'project-card reveal' + (i === 0 ? ' project-card--lg' : ' project-card--sm')}
+                  class={'project-card' + (i === 0 ? ' project-card--lg' : ' project-card--sm')}
                 >
                   <div
                     class="project-card__media"
@@ -283,7 +283,7 @@ const ctaLower = service.ctaLabel.charAt(0).toLowerCase() + service.ctaLabel.sli
               <h2 id="related-title">Может понадобиться</h2>
             </div>
           </div>
-          <div class="related-grid">
+          <div class="related-grid reveal-stagger">
             {
               related.map((r) => (
                 <a class="related-card" href={r.slug}>

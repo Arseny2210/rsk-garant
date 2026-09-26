@@ -57,7 +57,7 @@ doc.addEventListener('keydown', (e) => {
 });
 
 /* ---------- reveal on scroll ---------- */
-const revealEls = doc.querySelectorAll('.reveal');
+const revealEls = doc.querySelectorAll('.reveal, .sec-head, .reveal-stagger');
 if ('IntersectionObserver' in window && revealEls.length) {
   const io = new IntersectionObserver(
     (entries) => {
