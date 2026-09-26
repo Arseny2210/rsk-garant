@@ -851,7 +851,8 @@ main {
   font-size: 1.3rem;
 }
 
-.service-card__price {
+.service-card__price,
+.price-tag {
   display: inline-flex;
   align-self: flex-start;
   font-size: var(--text-sm);
@@ -2273,13 +2274,6 @@ button[disabled] {
 
 .calc__result.is-visible {
   display: grid;
-}
-
-.calc__result .calc__value {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--color-text);
 }
 
 .calc__result .calc__note {

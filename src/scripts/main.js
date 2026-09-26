@@ -396,8 +396,7 @@ function updateCalc() {
   // Услуги с фиксированной ценой «от» (санузел, двери и т.п.) — по площади не считаем
   if (unit === 'flat') {
     setAreaEnabled(false);
-    if (calcValue)
-      calcValue.textContent = `Ориентировочно ${priceRaw.replace('от ', 'от ')}`;
+    if (calcValue) calcValue.textContent = priceRaw;
     if (calcNote)
       calcNote.textContent =
         'Точную стоимость назовём после осмотра объекта и уточнения деталей.';
@@ -410,7 +409,7 @@ function updateCalc() {
 
   const area = parseInt(calcArea?.value || '0', 10);
   if (!(area >= 1)) {
-    if (calcValue) calcValue.textContent = 'Укажите площадь помещения';
+    if (calcValue) calcValue.textContent = 'Укажите площадь';
     if (calcNote)
       calcNote.textContent = 'Например: 35, 48 или 60 м² — и мы рассчитаем нижнюю границу стоимости.';
     calcCta?.removeAttribute('data-calc-area');
@@ -418,7 +417,8 @@ function updateCalc() {
   }
 
   const estimate = formatRubles(rate * area);
-  if (calcValue) calcValue.textContent = `Ориентировочно от ${estimate.toLocaleString('ru-RU')} ₽`;
+  if (calcValue)
+    calcValue.textContent = `от ${estimate.toLocaleString('ru-RU')} ₽`;
   if (calcNote)
     calcNote.textContent = `Предварительная нижняя граница при площади ${area} м². Точную смету подготовим после осмотра объекта.`;
   calcCta?.setAttribute('data-calc-area', String(area));
