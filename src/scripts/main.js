@@ -87,17 +87,41 @@ function formatPhone(digits) {
   return out;
 }
 
+function caretAfterDigits(formatted, count) {
+  let pos = formatted.length;
+  let seen = 0;
+  for (let i = 0; i < formatted.length; i++) {
+    if (/\d/.test(formatted[i])) {
+      seen++;
+      if (seen === count) {
+        pos = i + 1;
+        break;
+      }
+    }
+  }
+  return pos;
+}
+
 function maskPhone(input) {
-  const state = phoneState.get(input) || { lastDigits: '' };
   const caretPos = input.selectionStart ?? input.value.length;
-  // сколько цифр стоит ДО курсора — по ним восстановим позицию после форматирования
+  const hadSelection =
+    typeof input.selectionEnd === 'number' && input.selectionEnd > input.selectionStart;
+
+  const state = phoneState.get(input) || {
+    prevDigits: '',
+    prevCaret: caretPos,
+    prevLen: 0,
+  };
+
+  // сколько цифр стоит ДО курсора в текущем (уже изменённом) значении
   const digitsBeforeCaret = (input.value.slice(0, caretPos).match(/\d/g) || []).length;
+  const prevValueLen = state.prevLen;
 
   let digits = input.value.replace(/\D/g, '');
 
   if (digits.length === 0) {
     if (input.value !== '') input.value = '';
-    phoneState.set(input, { lastDigits: '' });
+    phoneState.set(input, { prevDigits: '', prevCaret: 0, prevLen: 0 });
     return;
   }
 
@@ -108,19 +132,19 @@ function maskPhone(input) {
   const formatted = formatPhone(digits);
 
   if (formatted !== input.value) {
+    const prevDigitsCount = state.prevDigits.length;
+    const typedAtEnd = state.prevCaret >= prevValueLen - 1;
+
+    // при вводе вперёд (или замене выделения) курсор ставим в конец;
+    // при стирании и правке в середине — сохраняем по номеру цифры
+    const moveToEnd = hadSelection || (digits.length > prevDigitsCount && typedAtEnd);
+
     input.value = formatted;
-    // вернуть курсор после той же по счёту цифры
-    let pos = 0;
-    let count = 0;
-    for (let i = 0; i < formatted.length && count < digitsBeforeCaret; i++) {
-      if (/\d/.test(formatted[i])) count++;
-      pos = i + 1;
-    }
-    if (pos === 0 && digitsBeforeCaret === 0) pos = 1;
+    const pos = moveToEnd ? formatted.length : caretAfterDigits(formatted, digitsBeforeCaret);
     input.setSelectionRange(pos, pos);
   }
 
-  phoneState.set(input, { lastDigits: digits });
+  phoneState.set(input, { prevDigits: digits, prevCaret: caretPos, prevLen: input.value.length });
 }
 
 function normalizePhone(value) {
