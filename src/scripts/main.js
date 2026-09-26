@@ -76,25 +76,51 @@ if ('IntersectionObserver' in window && revealEls.length) {
 }
 
 /* ---------- телефонная маска ---------- */
-function maskPhone(input) {
-  let digits = input.value.replace(/\D/g, '');
+const phoneState = new WeakMap();
 
-  // если пользователь стёр всё — поле полностью очищается
-  if (digits.length === 0) {
-    if (input.value !== '') input.value = '';
-    return;
-  }
-
-  if (digits.startsWith('8')) digits = '7' + digits.slice(1);
-  if (!digits.startsWith('7')) digits = '7' + digits;
-
+function formatPhone(digits) {
   let out = '+7';
   if (digits.length > 1) out += ' (' + digits.slice(1, 4);
   if (digits.length >= 4) out += ') ' + digits.slice(4, 7);
   if (digits.length >= 7) out += '-' + digits.slice(7, 9);
   if (digits.length >= 9) out += '-' + digits.slice(9, 11);
+  return out;
+}
 
-  if (out !== input.value) input.value = out;
+function maskPhone(input) {
+  const state = phoneState.get(input) || { lastDigits: '' };
+  const caretPos = input.selectionStart ?? input.value.length;
+  // сколько цифр стоит ДО курсора — по ним восстановим позицию после форматирования
+  const digitsBeforeCaret = (input.value.slice(0, caretPos).match(/\d/g) || []).length;
+
+  let digits = input.value.replace(/\D/g, '');
+
+  if (digits.length === 0) {
+    if (input.value !== '') input.value = '';
+    phoneState.set(input, { lastDigits: '' });
+    return;
+  }
+
+  if (digits.startsWith('8')) digits = '7' + digits.slice(1);
+  if (!digits.startsWith('7')) digits = '7' + digits;
+  digits = digits.slice(0, 11);
+
+  const formatted = formatPhone(digits);
+
+  if (formatted !== input.value) {
+    input.value = formatted;
+    // вернуть курсор после той же по счёту цифры
+    let pos = 0;
+    let count = 0;
+    for (let i = 0; i < formatted.length && count < digitsBeforeCaret; i++) {
+      if (/\d/.test(formatted[i])) count++;
+      pos = i + 1;
+    }
+    if (pos === 0 && digitsBeforeCaret === 0) pos = 1;
+    input.setSelectionRange(pos, pos);
+  }
+
+  phoneState.set(input, { lastDigits: digits });
 }
 
 function normalizePhone(value) {

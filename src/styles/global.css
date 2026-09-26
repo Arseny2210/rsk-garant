@@ -1297,7 +1297,8 @@ main {
 .field textarea {
   padding: 0.85rem 1.1rem;
   min-height: 96px;
-  resize: vertical;
+  height: 96px;
+  resize: none;
 }
 
 /* select должен выглядеть идентично input: своя стрелка, без нативных отступов */
