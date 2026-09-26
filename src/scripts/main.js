@@ -281,8 +281,16 @@ doc.querySelectorAll('[data-lightbox]').forEach((trigger) => {
 
   trigger.addEventListener('click', (e) => {
     if (e.target.closest('button')) return;
-    const list = embedded || (group ? Array.from(galleries.get(group)) : null);
-    openLightbox(item, list);
+    try {
+      const list = embedded || (group ? Array.from(galleries.get(group)) : null);
+      openLightbox(item, list);
+    } catch (err) {
+      // страховка: даже при сбое данных открываем одиночное фото
+      window._lbList = null;
+      window._lbIndex = -1;
+      renderLightbox();
+      if (typeof lightbox.showModal === 'function') lightbox.showModal();
+    }
   });
 });
 
@@ -314,6 +322,17 @@ function renderLightbox() {
   }
   if (lbPrev) lbPrev.style.display = list.length > 1 ? '' : 'none';
   if (lbNext) lbNext.style.display = list.length > 1 ? '' : 'none';
+
+  // предзагрузка соседних фото — листается без задержек
+  if (list.length > 1) {
+    [index - 1, index + 1].forEach((i) => {
+      const src = list[(i + list.length) % list.length]?.src;
+      if (src) {
+        const pre = new Image();
+        pre.src = src;
+      }
+    });
+  }
 
   if (lbDots) {
     lbDots.innerHTML = '';
