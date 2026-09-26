@@ -21,9 +21,32 @@ const address = company.address !== '[ADDRESS]' ? company.address : '';
       </div>
 
       <div class="contact-card">
-        <div class="label">Почта</div>
-        <a href={`mailto:${company.email}`}>{company.email}</a>
-        <div class="sub">Пришлите описание задачи и фото — подготовим расчет.</div>
+        <div class="label">Мессенджеры</div>
+        <div class="messenger-links">
+          <a
+            class="messenger-link"
+            href={company.whatsapp}
+            target="_blank"
+            rel="noopener"
+            data-track-messenger="whatsapp"
+          >
+            <span class="dot" aria-hidden="true"></span>
+            WhatsApp
+          </a>
+          <a
+            class="messenger-link"
+            href={company.telegram}
+            target="_blank"
+            rel="noopener"
+            data-track-messenger="telegram"
+          >
+            <span class="dot" aria-hidden="true"></span>
+            Telegram
+          </a>
+        </div>
+        <div class="sub">
+          <a href={`mailto:${company.email}`}>{company.email}</a>
+        </div>
       </div>
 
       <div class="contact-card">

@@ -1,0 +1,69 @@
+---
+import { mainServices } from '../data/services';
+
+const calcServices = mainServices.filter(
+  (s) => s.id === 'remont-pod-klyuch' || s.id === 'kosmeticheskiy-remont-komnaty'
+);
+---
+
+<section class="section section--soft" id="calc" aria-labelledby="calc-title">
+  <div class="container">
+    <div class="calc-layout">
+      <div class="calc-intro">
+        <div class="sec-head__label">Калькулятор</div>
+        <h2 id="calc-title">Предварительный расчет стоимости</h2>
+        <p>
+          Укажите тип ремонта и площадь — покажем ориентировочную стоимость «от».
+          Точную смету подготовим после осмотра объекта.
+        </p>
+      </div>
+
+      <div class="calc">
+        <div class="calc__fields">
+          <div class="field">
+            <label for="calc-type">Тип ремонта</label>
+            <select id="calc-type" name="calc-type">
+              <option value="">Выберите вариант</option>
+              {
+                calcServices.map((s) => (
+                  <option value={s.title} data-price={s.priceFrom}>{s.title}</option>
+                ))
+              }
+              <option value="other">Другая услуга / не знаю</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="calc-area">Площадь, м²</label>
+            <input
+              id="calc-area"
+              type="number"
+              name="calc-area"
+              min="1"
+              max="500"
+              inputmode="numeric"
+              placeholder="Например, 45"
+            />
+          </div>
+        </div>
+
+        <div class="calc__result" id="calc-result" role="status">
+          <div class="calc__value" id="calc-value"></div>
+          <div class="calc__note" id="calc-note"></div>
+        </div>
+
+        <div class="calc__actions">
+          <button
+            class="btn btn--primary"
+            type="button"
+            data-open-form
+            data-calc-cta
+          >
+            Получить точную смету
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

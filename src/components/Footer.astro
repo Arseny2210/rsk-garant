@@ -45,6 +45,8 @@ const address = company.address !== '[ADDRESS]' ? company.address : '';
           <li><a href={company.phoneHref}>{company.phone}</a></li>
           <li><a href={company.phoneAltHref}>{company.phoneAlt}</a></li>
           <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
+          <li><a href={company.whatsapp} target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href={company.telegram} target="_blank" rel="noopener">Telegram</a></li>
           {address && <li>{address}</li>}
           <li>{company.cityNominative} и {company.region}</li>
         </ul>

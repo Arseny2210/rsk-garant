@@ -4,5 +4,12 @@ import { company } from '../data/company';
 
 <div class="mobile-bar" aria-label="Быстрые действия">
   <a class="btn btn--ghost" href={company.phoneHref}>Позвонить</a>
-  <button class="btn btn--primary" type="button" data-open-form>Заявка</button>
+  <a
+    class="btn btn--ghost"
+    href={company.whatsapp}
+    target="_blank"
+    rel="noopener"
+    data-track-messenger="whatsapp"
+  >Написать</a>
+  <button class="btn btn--primary" type="button" data-open-form>Рассчитать</button>
 </div>

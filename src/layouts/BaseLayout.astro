@@ -34,7 +34,7 @@ const breadcrumbDefault = {
 
 const orgSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': 'HomeAndConstructionBusiness',
   '@id': SITE_URL + '/#organization',
   name: company.name,
   url: SITE_URL,
@@ -49,6 +49,9 @@ const orgSchema = {
   areaServed: [company.cityNominative, company.region],
   image: SITE_URL + image,
   priceRange: '₽₽',
+  sameAs: [company.telegram, company.whatsapp].filter(
+    (u) => u && !u.startsWith('[')
+  ),
 };
 
 const websiteSchema = {

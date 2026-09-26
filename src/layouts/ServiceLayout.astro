@@ -33,6 +33,10 @@ const breadcrumbSchema = {
   ],
 };
 
+const priceNumber = service.priceFrom
+  ? Number(service.priceFrom.replace(/\D/g, '').slice(0, 9))
+  : null;
+
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -50,7 +54,9 @@ const serviceSchema = {
     priceSpecification: {
       '@type': 'PriceSpecification',
       priceCurrency: 'RUB',
-      description: 'Стоимость рассчитывается после оценки объекта',
+      ...(priceNumber
+        ? { price: priceNumber, priceValidUntil: new Date().getFullYear() + 1 + '-12-31' }
+        : { description: 'Стоимость рассчитывается после оценки объекта' }),
     },
   },
 };
@@ -91,6 +97,9 @@ const ctaLower = service.ctaLabel.charAt(0).toLowerCase() + service.ctaLabel.sli
     <div class="container">
       <h1>{service.h1}</h1>
       <p class="lead">{service.subtitle}</p>
+      {service.priceFrom && (
+        <p class="page-hero__price">Стоимость — {service.priceFrom}</p>
+      )}
       <div class="page-hero__cta">
         <button class="btn btn--primary" type="button" data-open-form={service.title}>
           Рассчитать стоимость

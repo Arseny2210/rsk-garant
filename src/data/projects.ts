@@ -6,6 +6,10 @@ export interface Project {
   alt: string;
   before?: string;
   after?: string;
+  /** Параметры объекта — заполняются только реальными данными. */
+  area?: string;
+  city?: string;
+  duration?: string;
 }
 
 export const projects: Project[] = [

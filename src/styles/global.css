@@ -848,7 +848,18 @@ main {
 }
 
 .service-card__body h3 {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
+}
+
+.service-card__price {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-accent-strong);
+  border: 1px solid rgba(160, 126, 88, 0.35);
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
 }
 
 .service-card__body p {
@@ -961,8 +972,24 @@ main {
 }
 
 .project-card__info h3 {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   color: var(--color-text-invert);
+}
+
+.project-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.project-card__meta span {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: rgba(250, 250, 248, 0.85);
+  background: rgba(250, 250, 248, 0.14);
+  border-radius: 4px;
+  padding: 0.2rem 0.55rem;
 }
 
 .before-after {
@@ -1562,6 +1589,23 @@ main {
   gap: 0.9rem;
 }
 
+.page-hero__price {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-accent-strong);
+  margin-bottom: 1.75rem;
+}
+
+.page-hero__price::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: var(--color-accent);
+}
+
 .page-hero .hero__facts {
   border-top-color: var(--color-border);
 }
@@ -2103,6 +2147,134 @@ button[disabled] {
   cursor: not-allowed;
 }
 
+/* ---------- мессенджеры ---------- */
+.messenger-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.messenger-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.55rem 1rem;
+  background: var(--color-surface);
+  transition: border-color 0.25s, color 0.25s, transform 0.25s;
+}
+
+.messenger-link:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-strong);
+  transform: translateY(-1px);
+}
+
+.messenger-link .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.form-intro__messengers {
+  margin-top: 1.5rem;
+}
+
+/* ---------- примечание формы ---------- */
+.lead-form__note {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.lead-form__note::before {
+  content: "— ";
+  color: var(--color-accent);
+}
+
+/* ---------- калькулятор ---------- */
+.calc-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.calc-intro h2 {
+  font-size: var(--text-3xl);
+  margin-bottom: 1rem;
+}
+
+.calc-intro p {
+  color: var(--color-muted);
+  max-width: 40ch;
+}
+
+@media (max-width: 900px) {
+  .calc-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-md);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  display: grid;
+  gap: 1.25rem;
+}
+
+.calc__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.calc__result {
+  display: none;
+  padding: 1.25rem 1.5rem;
+  background: var(--color-surface-soft);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  gap: 0.5rem;
+}
+
+.calc__result.is-visible {
+  display: grid;
+}
+
+.calc__result .calc__value {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.calc__result .calc__note {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+.calc__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+@media (max-width: 560px) {
+  .calc__fields {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- mobile bottom bar ---------- */
 .mobile-bar {
   display: none;
@@ -2353,10 +2525,10 @@ button[disabled] {
     align-items: flex-start;
   }
 
-  /* плавающая мобильная панель */
+/* плавающая мобильная панель */
   .mobile-bar {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 0.6rem;
     position: fixed;
     left: 0.75rem;
@@ -2364,11 +2536,11 @@ button[disabled] {
     bottom: calc(0.75rem + env(safe-area-inset-bottom));
     z-index: 90;
     padding: 0.6rem;
-    background: rgba(246, 243, 238, 0.9);
+    background: rgba(245, 243, 238, 0.92);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-l);
+    border-radius: 14px;
     box-shadow: var(--shadow-lg);
   }
 

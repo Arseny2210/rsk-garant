@@ -13,7 +13,7 @@ const { service = '', withServiceSelect = false } = Astro.props;
   <div class="container form-layout">
     <div class="form-intro">
       <div class="sec-head__label">Заявка</div>
-      <h2 id="form-title">Расскажите, что нужно сделать</h2>
+      <h2 id="form-title">Рассчитаем стоимость работ</h2>
       <p>
         Опишите задачу — мы подготовим предварительный расчет и предложим удобное время для встречи.
       </p>
@@ -21,6 +21,28 @@ const { service = '', withServiceSelect = false } = Astro.props;
         <a href={company.phoneHref}>{company.phone}</a>
         <a href={company.phoneAltHref}>{company.phoneAlt}</a>
         <a href={`mailto:${company.email}`}>{company.email}</a>
+      </div>
+      <div class="form-intro__messengers messenger-links">
+        <a
+          class="messenger-link"
+          href={company.whatsapp}
+          target="_blank"
+          rel="noopener"
+          data-track-messenger="whatsapp"
+        >
+          <span class="dot" aria-hidden="true"></span>
+          Написать в WhatsApp
+        </a>
+        <a
+          class="messenger-link"
+          href={company.telegram}
+          target="_blank"
+          rel="noopener"
+          data-track-messenger="telegram"
+        >
+          <span class="dot" aria-hidden="true"></span>
+          Написать в Telegram
+        </a>
       </div>
     </div>
     <LeadForm service={service} withServiceSelect={withServiceSelect} />

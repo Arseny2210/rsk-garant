@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Process from '../components/Process.astro';
 import WhyUs from '../components/WhyUs.astro';
 import Reviews from '../components/Reviews.astro';
+import CostCalculator from '../components/CostCalculator.astro';
 import AdditionalServices from '../components/AdditionalServices.astro';
 import FormSection from '../components/FormSection.astro';
 import Faq from '../components/Faq.astro';
@@ -237,6 +238,15 @@ const servicesSchema = {
               <div class="project-card__info">
                 <div class="work-type">{p.workType}</div>
                 <h3>{p.title}</h3>
+                {
+                  (p.area || p.city || p.duration) && (
+                    <div class="project-card__meta">
+                      {p.area && <span>{p.area}</span>}
+                      {p.city && <span>{p.city}</span>}
+                      {p.duration && <span>{p.duration}</span>}
+                    </div>
+                  )
+                }
               </div>
             </article>
           ))
@@ -273,6 +283,9 @@ const servicesSchema = {
 
   <!-- Отзывы (скрыт, пока нет реальных отзывов) -->
   <Reviews />
+
+  <!-- Калькулятор стоимости -->
+  <CostCalculator />
 
   <!-- Форма -->
   <FormSection withServiceSelect />

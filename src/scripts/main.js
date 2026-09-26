@@ -277,6 +277,92 @@ doc.querySelectorAll('[data-service-card]').forEach((card) => {
   });
 });
 
+/* ---------- клики по мессенджерам ---------- */
+doc.querySelectorAll('[data-track-messenger]').forEach((link) => {
+  link.addEventListener('click', () => {
+    window.RSK_TRACK('messenger_click', { channel: link.dataset.trackMessenger });
+  });
+});
+
+/* ---------- просмотр портфолио ---------- */
+doc.querySelectorAll('[data-portfolio]').forEach((card) => {
+  card.addEventListener('click', () => {
+    const title = card.querySelector('h3')?.textContent?.trim() || '';
+    window.RSK_TRACK('portfolio_open', { title });
+  });
+});
+
+/* ---------- калькулятор стоимости ---------- */
+const calcType = doc.getElementById('calc-type');
+const calcArea = doc.getElementById('calc-area');
+const calcResult = doc.getElementById('calc-result');
+const calcValue = doc.getElementById('calc-value');
+const calcNote = doc.getElementById('calc-note');
+const calcCta = doc.querySelector('[data-calc-cta]');
+
+function formatRubles(n) {
+  return Math.ceil(n / 1000) * 1000;
+}
+
+function updateCalc() {
+  if (!calcType || !calcResult) return;
+  const type = calcType.value;
+  const area = parseInt(calcArea?.value || '0', 10);
+  const option = calcType.options[calcType.selectedIndex];
+
+  calcCta?.setAttribute('data-open-form', type && type !== 'other' ? type : '');
+
+  if (!type) {
+    calcResult.classList.remove('is-visible');
+    return;
+  }
+
+  calcResult.classList.add('is-visible');
+
+  if (type === 'other') {
+    if (calcValue) calcValue.textContent = 'Стоимость зависит от задачи';
+    if (calcNote)
+      calcNote.textContent = 'Подскажем ориентировочную стоимость после обсуждения деталей.';
+    calcCta?.removeAttribute('data-calc-area');
+    return;
+  }
+
+  if (!option?.dataset.price || !(area >= 1)) {
+    if (calcValue) calcValue.textContent = 'Укажите площадь помещения';
+    if (calcNote)
+      calcNote.textContent = 'Например: 35, 48 или 60 м² — и мы рассчитаем нижнюю границу стоимости.';
+    calcCta?.removeAttribute('data-calc-area');
+    return;
+  }
+
+  const rate = parseInt(option.dataset.price.replace(/\D/g, ''), 10);
+  const estimate = formatRubles(rate * area);
+  if (calcValue) calcValue.textContent = `Ориентировочно от ${estimate.toLocaleString('ru-RU')} ₽`;
+  if (calcNote)
+    calcNote.textContent = `Предварительная нижняя граница при площади ${area} м². Точную смету подготовим после осмотра объекта.`;
+  calcCta?.setAttribute('data-calc-area', String(area));
+
+  window.RSK_TRACK('calculator_calc', { type, area, estimate });
+}
+
+calcType?.addEventListener('change', updateCalc);
+calcArea?.addEventListener('input', updateCalc);
+
+calcCta?.addEventListener('click', () => {
+  const area = calcCta.getAttribute('data-calc-area');
+  if (area) {
+    const form = doc.querySelector('#lead-form');
+    const comment = form?.querySelector('[name="comment"]');
+    if (comment && !comment.value.trim()) {
+      comment.value = `Площадь помещения: ${area} м²`;
+    }
+  }
+  window.RSK_TRACK('calculator_cta', {
+    type: calcType?.value || '',
+    area: calcCta.getAttribute('data-calc-area') || '',
+  });
+});
+
 /* ---------- UTM ---------- */
 function getUtm() {
   const params = new URLSearchParams(window.location.search);
