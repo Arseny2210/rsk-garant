@@ -2275,6 +2275,24 @@ button[disabled] {
   }
 }
 
+/* аккуратные поля калькулятора */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.field.is-dimmed input,
+.field.is-dimmed select {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ---------- mobile bottom bar ---------- */
 .mobile-bar {
   display: none;

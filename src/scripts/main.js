@@ -295,6 +295,7 @@ doc.querySelectorAll('[data-portfolio]').forEach((card) => {
 /* ---------- калькулятор стоимости ---------- */
 const calcType = doc.getElementById('calc-type');
 const calcArea = doc.getElementById('calc-area');
+const calcAreaField = doc.getElementById('calc-area-field');
 const calcResult = doc.getElementById('calc-result');
 const calcValue = doc.getElementById('calc-value');
 const calcNote = doc.getElementById('calc-note');
@@ -307,13 +308,16 @@ function formatRubles(n) {
 function updateCalc() {
   if (!calcType || !calcResult) return;
   const type = calcType.value;
-  const area = parseInt(calcArea?.value || '0', 10);
   const option = calcType.options[calcType.selectedIndex];
+  const unit = option?.dataset.unit || '';
+  const priceRaw = option?.dataset.price || '';
+  const rate = parseInt(priceRaw.replace(/\D/g, ''), 10) || 0;
 
   calcCta?.setAttribute('data-open-form', type && type !== 'other' ? type : '');
 
   if (!type) {
     calcResult.classList.remove('is-visible');
+    setAreaEnabled(true);
     return;
   }
 
@@ -323,11 +327,28 @@ function updateCalc() {
     if (calcValue) calcValue.textContent = 'Стоимость зависит от задачи';
     if (calcNote)
       calcNote.textContent = 'Подскажем ориентировочную стоимость после обсуждения деталей.';
+    setAreaEnabled(false);
     calcCta?.removeAttribute('data-calc-area');
     return;
   }
 
-  if (!option?.dataset.price || !(area >= 1)) {
+  // Услуги с фиксированной ценой «от» (санузел, двери и т.п.) — по площади не считаем
+  if (unit === 'flat') {
+    setAreaEnabled(false);
+    if (calcValue)
+      calcValue.textContent = `Ориентировочно ${priceRaw.replace('от ', 'от ')}`;
+    if (calcNote)
+      calcNote.textContent =
+        'Точную стоимость назовём после осмотра объекта и уточнения деталей.';
+    calcCta?.removeAttribute('data-calc-area');
+    window.RSK_TRACK('calculator_calc', { type });
+    return;
+  }
+
+  setAreaEnabled(true);
+
+  const area = parseInt(calcArea?.value || '0', 10);
+  if (!(area >= 1)) {
     if (calcValue) calcValue.textContent = 'Укажите площадь помещения';
     if (calcNote)
       calcNote.textContent = 'Например: 35, 48 или 60 м² — и мы рассчитаем нижнюю границу стоимости.';
@@ -335,7 +356,6 @@ function updateCalc() {
     return;
   }
 
-  const rate = parseInt(option.dataset.price.replace(/\D/g, ''), 10);
   const estimate = formatRubles(rate * area);
   if (calcValue) calcValue.textContent = `Ориентировочно от ${estimate.toLocaleString('ru-RU')} ₽`;
   if (calcNote)
@@ -343,6 +363,13 @@ function updateCalc() {
   calcCta?.setAttribute('data-calc-area', String(area));
 
   window.RSK_TRACK('calculator_calc', { type, area, estimate });
+}
+
+function setAreaEnabled(enabled) {
+  if (!calcArea || !calcAreaField) return;
+  calcArea.disabled = !enabled;
+  calcAreaField.classList.toggle('is-dimmed', !enabled);
+  if (!enabled && calcArea.value) calcArea.value = '';
 }
 
 calcType?.addEventListener('change', updateCalc);

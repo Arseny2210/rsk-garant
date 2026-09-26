@@ -1,9 +1,11 @@
 ---
 import { mainServices } from '../data/services';
 
-const calcServices = mainServices.filter(
-  (s) => s.id === 'remont-pod-klyuch' || s.id === 'kosmeticheskiy-remont-komnaty'
-);
+const calcServices = mainServices;
+
+function isPerM2(price: string): boolean {
+  return price.includes('/м²');
+}
 ---
 
 <section class="section section--soft" id="calc" aria-labelledby="calc-title">
@@ -13,7 +15,7 @@ const calcServices = mainServices.filter(
         <div class="sec-head__label">Калькулятор</div>
         <h2 id="calc-title">Предварительный расчет стоимости</h2>
         <p>
-          Укажите тип ремонта и площадь — покажем ориентировочную стоимость «от».
+          Выберите услугу и укажите площадь — покажем ориентировочную стоимость «от».
           Точную смету подготовим после осмотра объекта.
         </p>
       </div>
@@ -21,19 +23,25 @@ const calcServices = mainServices.filter(
       <div class="calc">
         <div class="calc__fields">
           <div class="field">
-            <label for="calc-type">Тип ремонта</label>
+            <label for="calc-type">Услуга</label>
             <select id="calc-type" name="calc-type">
-              <option value="">Выберите вариант</option>
+              <option value="">Выберите услугу</option>
               {
                 calcServices.map((s) => (
-                  <option value={s.title} data-price={s.priceFrom}>{s.title}</option>
+                  <option
+                    value={s.title}
+                    data-price={s.priceFrom}
+                    data-unit={isPerM2(s.priceFrom) ? 'm2' : 'flat'}
+                  >
+                    {s.title}
+                  </option>
                 ))
               }
               <option value="other">Другая услуга / не знаю</option>
             </select>
           </div>
 
-          <div class="field">
+          <div class="field" id="calc-area-field">
             <label for="calc-area">Площадь, м²</label>
             <input
               id="calc-area"
