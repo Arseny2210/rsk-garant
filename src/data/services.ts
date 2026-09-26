@@ -7,6 +7,9 @@ export interface MainService {
   id: string;
   title: string;
   ctaLabel: string;
+  /** Цена «от» — отображается в карточке и на странице услуги.
+      Пример: 'от 5 900 ₽/м²'. Проверьте актуальность перед публикацией! */
+  priceFrom: string;
   slug: string;
   image: string;
   imageAlt: string;
@@ -34,6 +37,7 @@ export const mainServices: MainService[] = [
     id: 'remont-pod-klyuch',
     title: 'Ремонт под ключ',
     ctaLabel: 'Ремонтом под ключ',
+    priceFrom: 'от 5 900 ₽/м²',
     slug: '/remont-pod-klyuch/',
     image: '/images/services/remont-pod-klyuch.webp',
     imageAlt: 'Комплексный ремонт квартиры под ключ',
@@ -103,6 +107,7 @@ export const mainServices: MainService[] = [
     id: 'kosmeticheskiy-remont-komnaty',
     title: 'Косметический ремонт комнаты',
     ctaLabel: 'Косметическим ремонтом комнаты',
+    priceFrom: 'от 2 900 ₽/м²',
     slug: '/kosmeticheskiy-remont-komnaty/',
     image: '/images/services/kosmeticheskiy-remont-komnaty.webp',
     imageAlt: 'Косметический ремонт комнаты',
@@ -165,6 +170,7 @@ export const mainServices: MainService[] = [
     id: 'remont-sanuzlov',
     title: 'Ремонт санузлов',
     ctaLabel: 'Ремонтом санузла',
+    priceFrom: 'от 43 900 ₽',
     slug: '/remont-sanuzlov/',
     image: '/images/services/remont-sanuzla.webp',
     imageAlt: 'Ремонт ванной комнаты с укладкой плитки',
@@ -233,6 +239,7 @@ export const mainServices: MainService[] = [
     id: 'plitochnye-raboty',
     title: 'Плиточные работы',
     ctaLabel: 'Плиточными работами',
+    priceFrom: 'от 1 100 ₽/м²',
     slug: '/plitochnye-raboty/',
     image: '/images/services/plitochnye-raboty.webp',
     imageAlt: 'Укладка керамической плитки в ванной комнате',
@@ -300,6 +307,7 @@ export const mainServices: MainService[] = [
     id: 'okleyka-oboev',
     title: 'Оклейка обоев',
     ctaLabel: 'Оклейкой обоев',
+    priceFrom: 'от 350 ₽/м²',
     slug: '/okleyka-oboev/',
     image: '/images/services/okleyka-oboev.webp',
     imageAlt: 'Оклейка стен обоями в комнате',
@@ -363,6 +371,7 @@ export const mainServices: MainService[] = [
     id: 'ukladka-laminata',
     title: 'Укладка ламината',
     ctaLabel: 'Укладкой ламината',
+    priceFrom: 'от 400 ₽/м²',
     slug: '/ukladka-laminata/',
     image: '/images/services/ukladka-laminata.webp',
     imageAlt: 'Укладка ламината на пол в квартире',
@@ -428,20 +437,21 @@ export const mainServices: MainService[] = [
     id: 'natyazhnye-potolki',
     title: 'Натяжные потолки',
     ctaLabel: 'Натяжными потолками',
+    priceFrom: 'от 390 ₽/м²',
     slug: '/natyazhnye-potolki/',
     image: '/images/services/natyazhnye-potolki.webp',
     imageAlt: 'Многоуровневый натяжной потолок с освещением',
     seoTitle: 'Натяжные потолки в Москве — установка — РСК Гарант',
     metaDescription:
-      'Установка натяжных потолков в Москве: матовые, глянцевые, многоуровневые, со встроенным освещением. Собственное производство полотна. Рассчитаем стоимость.',
+      'Натяжные потолки в Москве: матовые, глянцевые, многоуровневые, со встроенным освещением. Собственное производство полотна. Гарантия на полотна 12 лет.',
     h1: 'Натяжные потолки в Москве',
-    subtitle: 'Устанавливаем натяжные потолки: матовые, глянцевые, сатиновые, многоуровневые. Полотно собственного производства, монтаж под ключ.',
+    subtitle: 'Устанавливаем натяжные потолки: матовые, глянцевые, сатиновые, многоуровневые. Полотно собственного производства с гарантией 12 лет.',
     intro:
       'Натяжной потолок — быстрый способ получить ровный потолок и спрятать коммуникации. ПВХ-полотно устойчиво к влаге и подходит для кухни и ванной, а при протечке сверху способно удержать воду.',
     utp: [
+      { title: 'Гарантия 12 лет', text: 'Гарантия на полотна натяжных потолков собственного производства — 12 лет.' },
       { title: 'Собственное производство', text: 'Полотно натяжных потолков производим на собственном производстве.' },
-      { title: 'Монтаж под ключ', text: 'Замер, изготовление полотна, монтаж и уборка.' },
-      { title: 'Освещение и конструкции', text: 'Монтируем точечные светильники, люстры и многоуровневые конструкции.' }
+      { title: 'Монтаж под ключ', text: 'Замер, изготовление полотна, монтаж и уборка.' }
     ],
     includesTitle: 'Какие потолки устанавливаем',
     includes: [
@@ -477,6 +487,7 @@ export const mainServices: MainService[] = [
     ],
     faqTitle: 'Частые вопросы о натяжных потолках',
     faq: [
+      { q: 'Какая гарантия на натяжные потолки?', a: 'На полотна натяжных потолков собственного производства действует гарантия 12 лет. На монтажные работы — гарантия согласно договору.' },
       { q: 'Какие бывают натяжные потолки?', a: 'Матовые, глянцевые и сатиновые, одноуровневые и многоуровневые, с встроенным освещением и фотопечатью.' },
       { q: 'Подходит ли натяжной потолок для ванной и кухни?', a: 'Да, ПВХ-пленка влагоустойчива и подходит для влажных помещений, в том числе для кухни и ванной.' },
       { q: 'Сколько опускается потолок?', a: 'Потолок опускается на высоту установленного профиля, обычно от нескольких сантиметров.' },
@@ -490,6 +501,7 @@ export const mainServices: MainService[] = [
     id: 'ustanovka-dverey',
     title: 'Установка дверей',
     ctaLabel: 'Установкой дверей',
+    priceFrom: 'от 2 900 ₽',
     slug: '/ustanovka-dverey/',
     image: '/images/services/ustanovka-dverey.webp',
     imageAlt: 'Установка межкомнатных дверей в квартире',

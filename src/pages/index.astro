@@ -157,6 +157,7 @@ const servicesSchema = {
               </div>
               <div class="service-card__body">
                 <h3>{s.title}</h3>
+                {s.priceFrom && <span class="service-card__price">{s.priceFrom}</span>}
                 <p>{s.subtitle}</p>
                 <span class="service-card__link">
                   Подробнее

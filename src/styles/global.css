@@ -130,7 +130,7 @@ h4 {
 .section--dark h2,
 .section--dark h3,
 .form-section h2,
-.final-cta h2,
+.final-cta__inner h2,
 .site-footer h2,
 .site-footer h3 {
   color: var(--color-text-invert);
@@ -1440,12 +1440,12 @@ main {
   pointer-events: none;
 }
 
-.final-cta h2 {
+.final-cta__inner h2 {
   font-size: var(--text-2xl);
   margin-bottom: 0.6rem;
 }
 
-.final-cta p {
+.final-cta__inner p {
   color: rgba(247, 244, 238, 0.7);
   max-width: 44ch;
 }
