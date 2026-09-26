@@ -77,13 +77,24 @@ if ('IntersectionObserver' in window && revealEls.length) {
 
 /* ---------- телефонная маска ---------- */
 function maskPhone(input) {
-  const digits = input.value.replace(/\D/g, '');
+  let digits = input.value.replace(/\D/g, '');
+
+  // если пользователь стёр всё — поле полностью очищается
+  if (digits.length === 0) {
+    if (input.value !== '') input.value = '';
+    return;
+  }
+
+  if (digits.startsWith('8')) digits = '7' + digits.slice(1);
+  if (!digits.startsWith('7')) digits = '7' + digits;
+
   let out = '+7';
   if (digits.length > 1) out += ' (' + digits.slice(1, 4);
   if (digits.length >= 4) out += ') ' + digits.slice(4, 7);
   if (digits.length >= 7) out += '-' + digits.slice(7, 9);
   if (digits.length >= 9) out += '-' + digits.slice(9, 11);
-  input.value = out;
+
+  if (out !== input.value) input.value = out;
 }
 
 function normalizePhone(value) {
