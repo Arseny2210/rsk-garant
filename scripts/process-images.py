@@ -1,32 +1,42 @@
 #!/usr/bin/env python3
-"""Оптимизация фотографий работ: исходники -> WebP (max 1600px, q78)."""
+"""Оптимизация фотографий работ: исходники -> WebP (max 1600px, q78).
+Обрабатывает все папки проектов из _source/remont-img."""
 
 import os
-import shutil
 import subprocess
 
 SRC = "_source/remont-img"
 OUT = "public/images/projects"
 
-MAP = {
-    "Люберцы, Рождественская ремонт под ключ": ("lyubertsy-rozhdestvenskaya", 12),
-    "Мытищи, сан узел ремонт": ("mytishchi-sanuzel", 8),
-    "Люберцы, 8 марта ремонт под ключ": ("lyubertsy-8-marta", 6),
-    "выхино ремонт квартиры вторичка": ("vykhino-vtorichka", 6),
-    "Лыткарино колхозная косметический ремонт": ("lytkarino-kolhoznaya", 6),
-    "косметический ремонт квартиры выхино": ("vykhino-cosmetic", 6),
-    "лыткарино, косметический ремонт маленькой кухни": ("lytkarino-kuhnya", 4),
-    "сан узел и ремонт кухни фитаревская": ("fitarevskaya-sanuzel", 6),
-    "Лыткарино, Песчаная д.8 новостройка": ("lytkarino-peschannaya", 8),
-    "лыткарино, 6-й микрорайон ремонт студии под ключ": ("lytkarino-6-mkr", 6),
-    "Рублевское шоссе частный дом": ("rublevskoe-dom", 6),
-    "Лыткарино, 3-й квартал черновая": ("lytkarino-chernovaya", 8),
-    "новостройка по реновации": ("novostroyka-renovaciya", 6),
+SLUGS = {
+    "Бутово дмитрия донского косметический ремонт": ("butovo-cosmetic", 6),
+    "Лыткарино колхозная косметический ремонт": ("lytkarino-kolhoznaya", 8),
+    "Лыткарино,  старый фонд финские домики": ("lytkarino-finskie-domiki", 6),
+    "Лыткарино, 3-й квартал черновая": ("lytkarino-chernovaya", 10),
+    "Лыткарино, Песчаная д.8 новостройка": ("lytkarino-peschannaya", 10),
+    "Лыткарино, коммунистическая 53": ("lytkarino-kommunisticheskaya-53", 6),
+    "Лыткарино, ремонт комнаты": ("lytkarino-komnata", 6),
+    "Люберцы, 116-й квартал": ("lyubertsy-116-kvartal", 8),
+    "Люберцы, 8 марта ремонт под ключ": ("lyubertsy-8-marta", 10),
+    "Люберцы, Рождественская ремонт под ключ": ("lyubertsy-rozhdestvenskaya", 16),
+    "Мытищи, сан узел ремонт": ("mytishchi-sanuzel", 10),
+    "Рублевское шоссе частный дом": ("rublevskoe-dom", 10),
+    "выхино ремонт квартиры вторичка": ("vykhino-vtorichka", 8),
+    "коммунарка переделка после частников плесень": ("kommunarka-posle-chastnikov", 8),
+    "косметика частный дом": ("kosmetika-chastnyi-dom", 6),
+    "косметический ремонт квартиры выхино": ("vykhino-cosmetic", 8),
+    "лыткарино ремонт в магазине косметика по быстрому": ("lytkarino-magazin", 6),
+    "лыткарино, 6-й микрорайон ремонт студии под ключ": ("lytkarino-6-mkr", 8),
+    "лыткарино, коммунистическая д.55 общежитие": ("lytkarino-obshchezhitie", 6),
+    "лыткарино, косметический ремонт маленькой кухни": ("lytkarino-kuhnya", 6),
+    "москва ферганская косметический ремонт кухни": ("moskva-ferganskaya-kuhnya", 6),
+    "новостройка по реновации": ("novostroyka-renovaciya", 8),
+    "сан узел и ремонт кухни фитаревская": ("fitarevskaya-sanuzel", 8),
 }
 
 EXTS = {".jpg", ".jpeg", ".png", ".webp"}
 
-for folder, (slug, limit) in MAP.items():
+for folder, (slug, limit) in SLUGS.items():
     src_dir = os.path.join(SRC, folder)
     if not os.path.isdir(src_dir):
         print(f"SKIP (нет папки): {folder}")
@@ -63,15 +73,12 @@ for folder, (slug, limit) in MAP.items():
             capture_output=True,
         )
         if r.returncode != 0 or not os.path.exists(tmp):
-            print(f"  skip {name} (sips)")
             continue
         r = subprocess.run(
             ["cwebp", "-quiet", "-q", "78", tmp, "-o", out_path],
             capture_output=True,
         )
-        if r.returncode != 0:
-            print(f"  skip {name} (cwebp)")
-            continue
-        os.remove(tmp)
+        if r.returncode == 0:
+            os.remove(tmp)
 
 print("DONE")

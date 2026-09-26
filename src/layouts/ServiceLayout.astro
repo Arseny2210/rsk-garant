@@ -202,6 +202,7 @@ const ctaLower = service.ctaLabel.charAt(0).toLowerCase() + service.ctaLabel.sli
                   <div
                     class="project-card__media"
                     data-lightbox
+                    data-gallery={service.id}
                     data-caption={`${service.title} — пример работы`}
                   >
                     <img src={img.src} alt={img.alt} loading="lazy" width="705" height="527" />

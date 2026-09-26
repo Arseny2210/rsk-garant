@@ -87,13 +87,14 @@ const servicesSchema = {
 
       <div class="hero__media">
         <img
-          src="/images/projects/lyubertsy-rozhdestvenskaya/02.webp"
-          alt="Ремонт квартиры под ключ в Люберцах — пример выполненной работы"
-          width="1200"
-          height="1600"
+          src="/images/hero/hero-interior.webp"
+          alt="Гостиная после ремонта — светлый интерьер с большими окнами"
+          width="1600"
+          height="1067"
           fetchpriority="high"
           data-lightbox
-          data-caption="Ремонт квартиры под ключ — пример работы"
+          data-gallery="home-projects"
+          data-caption="Пример готового интерьера после ремонта"
         />
       </div>
     </div>
@@ -181,7 +182,7 @@ const servicesSchema = {
 
       <div class="portfolio-grid reveal-stagger">
         {
-          projects.slice(0, 6).map((p, i) => (
+          projects.slice(0, 9).map((p, i) => (
             <article
               class={'project-card' + (i === 0 ? ' project-card--lg' : i === 1 ? ' project-card--sm' : '')}
               data-portfolio
@@ -189,6 +190,7 @@ const servicesSchema = {
               <div
                 class="project-card__media"
                 data-lightbox
+                data-gallery="home-projects"
                 data-caption={p.title}
               >
                 <img src={p.image} alt={p.alt} loading="lazy" width="1200" height="1600" />
