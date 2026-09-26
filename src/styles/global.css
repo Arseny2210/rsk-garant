@@ -2126,7 +2126,8 @@ main {
 
 .lightbox__stage img {
   max-width: 100%;
-  max-height: calc(100dvh - 7.5rem);
+  max-height: calc(100dvh - 12rem);
+  min-height: 200px;
   object-fit: contain;
   border-radius: var(--radius-card);
   background: rgba(0, 0, 0, 0.3);

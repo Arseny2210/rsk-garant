@@ -39,8 +39,8 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Ремонтом под ключ',
     priceFrom: 'от 5 900 ₽/м²',
     slug: '/remont-pod-klyuch/',
-    image: '/images/projects/lyubertsy-rozhdestvenskaya/01.webp',
-    imageAlt: 'Ремонт квартиры под ключ в Люберцах — пример выполненной работы',
+    image: '/images/projects/pod-klutch/01.webp',
+    imageAlt: 'Ремонт квартиры под ключ — пример выполненной работы',
     seoTitle: 'Ремонт квартир под ключ в Москве — РСК Гарант',
     metaDescription:
       'Ремонт квартир под ключ в Москве и Московской области: от демонтажа до чистовой отделки. Берем организацию и выполнение работ на себя. Рассчитаем стоимость.',
@@ -109,8 +109,8 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Косметическим ремонтом комнаты',
     priceFrom: 'от 2 900 ₽/м²',
     slug: '/kosmeticheskiy-remont-komnaty/',
-    image: '/images/projects/vykhino-cosmetic/01.webp',
-    imageAlt: 'Косметический ремонт квартиры в Выхино — пример выполненной работы',
+    image: '/images/projects/kosmet-rem/01.webp',
+    imageAlt: 'Косметический ремонт — пример выполненной работы',
     seoTitle: 'Косметический ремонт комнаты в Москве — РСК Гарант',
     metaDescription:
       'Косметический ремонт комнаты в Москве: обои, напольное покрытие, потолок, двери. Обновим комнату быстро и аккуратно. Бесплатная оценка работ — оставьте заявку.',
@@ -172,8 +172,8 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Ремонтом санузла',
     priceFrom: 'от 43 900 ₽',
     slug: '/remont-sanuzlov/',
-    image: '/images/projects/mytishchi-sanuzel/01.webp',
-    imageAlt: 'Ремонт санузла в Мытищах — пример выполненной работы',
+    image: '/images/projects/sanuzel/01.webp',
+    imageAlt: 'Ремонт санузла — пример выполненной работы',
     seoTitle: 'Ремонт санузла в Москве — ремонт ванной и туалета — РСК Гарант',
     metaDescription:
       'Ремонт санузла в Москве: ванная комната и туалет под ключ. Плитка, сантехника, электрика, потолок. Рассчитаем стоимость — оставьте заявку.',
@@ -241,8 +241,8 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Плиточными работами',
     priceFrom: 'от 1 100 ₽/м²',
     slug: '/plitochnye-raboty/',
-    image: '/images/projects/fitarevskaya-sanuzel/01.webp',
-    imageAlt: 'Укладка плитки в санузле — пример выполненной работы',
+    image: '/images/projects/plitka/01.webp',
+    imageAlt: 'Плиточные работы — пример выполненной работы',
     seoTitle: 'Плиточные работы в Москве — укладка плитки — РСК Гарант',
     metaDescription:
       'Плиточные работы в Москве: укладка плитки на стены и пол, подготовка основания, затирка. Ровная кладка и аккуратные швы. Рассчитаем стоимость.',
@@ -309,8 +309,8 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Оклейкой обоев',
     priceFrom: 'от 350 ₽/м²',
     slug: '/okleyka-oboev/',
-    image: '/images/projects/lytkarino-kolhoznaya/01.webp',
-    imageAlt: 'Оклейка обоев в Лыткарино — пример выполненной работы',
+    image: '/images/projects/oboi/01.webp',
+    imageAlt: 'Оклейка обоев — пример выполненной работы',
     seoTitle: 'Оклейка обоев в Москве — поклейка обоев — РСК Гарант',
     metaDescription:
       'Оклейка обоев в Москве: подготовка стен, подгонка рисунка, аккуратные стыки. Клеим бумажные, виниловые, флизелиновые обои. Рассчитаем стоимость.',
@@ -373,8 +373,8 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Укладкой ламината',
     priceFrom: 'от 400 ₽/м²',
     slug: '/ukladka-laminata/',
-    image: '/images/projects/lytkarino-peschannaya/01.webp',
-    imageAlt: 'Укладка напольного покрытия в новостройке — пример выполненной работы',
+    image: '/images/projects/laminat/01.webp',
+    imageAlt: 'Укладка ламината — пример выполненной работы',
     seoTitle: 'Укладка ламината в Москве — РСК Гарант',
     metaDescription:
       'Укладка ламината в Москве: подготовка основания, укладка с подложкой, плинтус и примыкания. Аккуратная укладка под ключ. Рассчитаем стоимость.',
@@ -439,8 +439,8 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Натяжными потолками',
     priceFrom: 'от 390 ₽/м²',
     slug: '/natyazhnye-potolki/',
-    image: '/images/services/natyazhnye-potolki.webp',
-    imageAlt: 'Многоуровневый натяжной потолок с освещением',
+    image: '/images/projects/nat-potolki/01.webp',
+    imageAlt: 'Натяжные потолки — пример выполненной работы',
     seoTitle: 'Натяжные потолки в Москве — установка — РСК Гарант',
     metaDescription:
       'Натяжные потолки в Москве: матовые, глянцевые, многоуровневые, со встроенным освещением. Собственное производство полотна. Гарантия на полотна 12 лет.',
@@ -503,8 +503,8 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Установкой дверей',
     priceFrom: 'от 2 900 ₽',
     slug: '/ustanovka-dverey/',
-    image: '/images/services/ustanovka-dverey.webp',
-    imageAlt: 'Установка межкомнатных дверей в квартире',
+    image: '/images/projects/dveri/01.webp',
+    imageAlt: 'Установка дверей — пример выполненной работы',
     seoTitle: 'Установка межкомнатных дверей в Москве — РСК Гарант',
     metaDescription:
       'Установка дверей в Москве: монтаж межкомнатных дверей, демонтаж старых, подготовка проема, доборы и наличники. Рассчитаем стоимость.',
@@ -577,40 +577,30 @@ export interface AdditionalService {
 }
 
 export const additionalServices: AdditionalService[] = [
-  { id: 'shtukaturka-sten', title: 'Штукатурка стен', description: 'Выравнивание стен штукатурными смесями по маякам под дальнейшую отделку.', images: [
-    { src: '/images/projects/lytkarino-chernovaya/01.webp', alt: 'Черновые штукатурные работы — пример выполненной работы', caption: 'Пример выполненных работ' },
-    { src: '/images/projects/novostroyka-renovaciya/01.webp', alt: 'Подготовка стен в новостройке — пример выполненной работы', caption: 'Пример выполненных работ' },
-  ] },
+  { id: 'shtukaturka-sten', title: 'Штукатурка стен', description: 'Выравнивание стен штукатурными смесями по маякам под дальнейшую отделку.', images: [] },
   { id: 'shpaklevka-sten', title: 'Шпаклевка стен', description: 'Финишное выравнивание стен под обои и покраску.', images: [] },
-  { id: 'montazh-gipsokartona', title: 'Монтаж гипсокартона', description: 'Выравнивание стен и потолков листами ГКЛ, короба, ниши, арки.', images: [
-    { src: '/images/projects/novostroyka-renovaciya/02.webp', alt: 'Монтаж гипсокартона в новостройке — пример выполненной работы', caption: 'Пример выполненных работ' },
-    { src: '/images/projects/lytkarino-chernovaya/02.webp', alt: 'Черновые работы с гипсокартоном — пример выполненной работы', caption: 'Пример выполненных работ' },
-  ] },
+  { id: 'montazh-gipsokartona', title: 'Монтаж гипсокартона', description: 'Выравнивание стен и потолков листами ГКЛ, короба, ниши, арки.', images: [] },
   { id: 'dekorativnaya-shtukaturka', title: 'Декоративная штукатурка стен', description: 'Фактурное финишное покрытие стен с выразительной поверхностью.', images: [] },
   { id: 'pokraska-sten', title: 'Покраска стен', description: 'Окраска стен и потолков водными составами, подготовка под покраску.', images: [
-    { src: '/images/projects/vykhino-cosmetic/02.webp', alt: 'Отделка стен в косметическом ремонте — пример выполненной работы', caption: 'Пример выполненных работ' },
-    { src: '/images/projects/lytkarino-kolhoznaya/02.webp', alt: 'Финишная отделка стен — пример выполненной работы', caption: 'Пример выполненных работ' },
+    { src: '/images/projects/kosmet-rem/01.webp', alt: 'Финишная отделка стен — пример выполненной работы', caption: 'Пример выполненных работ' },
+    { src: '/images/projects/kosmet-rem/02.webp', alt: 'Отделка стен при косметическом ремонте — пример выполненной работы', caption: 'Пример выполненных работ' }
   ] },
   { id: 'santehnika', title: 'Сантехника', description: 'Замена труб, установка ванн, душевых, унитазов, раковин и смесителей.', images: [
-    { src: '/images/projects/mytishchi-sanuzel/05.webp', alt: 'Сантехнические работы при ремонте санузла — пример выполненной работы', caption: 'Пример выполненных работ' },
-    { src: '/images/projects/fitarevskaya-sanuzel/03.webp', alt: 'Ремонт санузла с заменой сантехники — пример выполненной работы', caption: 'Пример выполненных работ' },
+    { src: '/images/projects/sanuzel/01.webp', alt: 'Сантехнические работы при ремонте санузла — пример выполненной работы', caption: 'Пример выполненных работ' },
+    { src: '/images/projects/sanuzel/02.webp', alt: 'Ремонт санузла — пример выполненной работы', caption: 'Пример выполненных работ' },
+    { src: '/images/projects/sanuzel/03.webp', alt: 'Сантехника в санузле — пример выполненной работы', caption: 'Пример выполненных работ' }
   ] },
   { id: 'elektrika', title: 'Электрика', description: 'Прокладка и замена проводки, установка розеток, выключателей и светильников.', images: [] },
   { id: 'poly', title: 'Полы', description: 'Устройство напольных покрытий и выравнивание основания под них.', images: [
-    { src: '/images/projects/lytkarino-peschannaya/02.webp', alt: 'Устройство напольного покрытия — пример выполненной работы', caption: 'Пример выполненных работ' },
-    { src: '/images/projects/lytkarino-6-mkr/02.webp', alt: 'Укладка напольного покрытия — пример выполненной работы', caption: 'Пример выполненных работ' },
+    { src: '/images/projects/laminat/01.webp', alt: 'Устройство напольного покрытия — пример выполненной работы', caption: 'Пример выполненных работ' },
+    { src: '/images/projects/laminat/02.webp', alt: 'Укладка напольного покрытия — пример выполненной работы', caption: 'Пример выполненных работ' },
+    { src: '/images/projects/laminat/03.webp', alt: 'Напольное покрытие — пример выполненной работы', caption: 'Пример выполненных работ' }
   ] },
-  { id: 'styazhka-pola', title: 'Стяжка пола', description: 'Устройство цементно-песчаной и полусухой стяжки пола.', images: [
-    { src: '/images/projects/lytkarino-chernovaya/03.webp', alt: 'Черновые работы по устройству пола — пример выполненной работы', caption: 'Пример выполненных работ' },
-    { src: '/images/projects/novostroyka-renovaciya/03.webp', alt: 'Подготовка пола в новостройке — пример выполненной работы', caption: 'Пример выполненных работ' },
-  ] },
+  { id: 'styazhka-pola', title: 'Стяжка пола', description: 'Устройство цементно-песчаной и полусухой стяжки пола.', images: [] },
   { id: 'ukladka-kvarcvinila', title: 'Укладка кварцвинила', description: 'Укладка кварц-виниловой плитки и ламината SPC на подготовленное основание.', images: [] },
   { id: 'ukladka-parketa', title: 'Укладка паркета', description: 'Укладка штучного паркета и инженерной доски.', images: [] },
   { id: 'okna', title: 'Окна', description: 'Демонтаж и монтаж оконных конструкций, устройство откосов.', images: [] },
-  { id: 'vozvedenie-peregorodok', title: 'Возведение перегородок', description: 'Строительство межкомнатных перегородок из ГКЛ, кирпича и пазогребневых плит.', images: [
-    { src: '/images/projects/novostroyka-renovaciya/04.webp', alt: 'Возведение перегородок в новостройке — пример выполненной работы', caption: 'Пример выполненных работ' },
-    { src: '/images/projects/lytkarino-chernovaya/04.webp', alt: 'Черновые работы по перегородкам — пример выполненной работы', caption: 'Пример выполненных работ' },
-  ] }
+  { id: 'vozvedenie-peregorodok', title: 'Возведение перегородок', description: 'Строительство межкомнатных перегородок из ГКЛ, кирпича и пазогребневых плит.', images: [] }
 ];
 
 export function getMainService(id: string): MainService | undefined {
