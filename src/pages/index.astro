@@ -87,18 +87,14 @@ const servicesSchema = {
 
       <div class="hero__media">
         <img
-          src="/images/hero/hero-remont-kvartiry.webp"
-          alt="Комплексный ремонт квартиры, выполненный компанией РСК Гарант"
-          width="705"
-          height="812"
+          src="/images/projects/lyubertsy-rozhdestvenskaya/02.webp"
+          alt="Ремонт квартиры под ключ в Люберцах — пример выполненной работы"
+          width="1200"
+          height="1600"
           fetchpriority="high"
           data-lightbox
           data-caption="Ремонт квартиры под ключ — пример работы"
         />
-        <div class="hero__chip">
-          <span class="dot" aria-hidden="true"></span>
-          Собственное производство натяжных потолков
-        </div>
       </div>
     </div>
   </section>
@@ -194,46 +190,8 @@ const servicesSchema = {
                 class="project-card__media"
                 data-lightbox
                 data-caption={p.title}
-                data-before={p.before || undefined}
-                data-after={p.after || undefined}
               >
-                {
-                  p.before && p.after ? (
-                    <>
-                      <img
-                        src={p.after}
-                        alt={p.alt}
-                        loading="lazy"
-                        width="609"
-                        height="400"
-                        data-ba-img
-                      />
-                    </>
-                  ) : (
-                    <img src={p.image} alt={p.alt} loading="lazy" width="705" height="527" />
-                  )
-                }
-                {
-                  p.before && p.after && (
-                    <div class="before-after" style="position:absolute; top:1rem; right:1rem; background:rgba(25,24,21,0.75); border-radius:4px;">
-                      <button
-                        class="is-active"
-                        type="button"
-                        data-src={p.after}
-                        data-alt={p.alt}
-                      >
-                        После
-                      </button>
-                      <button
-                        type="button"
-                        data-src={p.before}
-                        data-alt={'Комната до ремонта'}
-                      >
-                        До
-                      </button>
-                    </div>
-                  )
-                }
+                <img src={p.image} alt={p.alt} loading="lazy" width="1200" height="1600" />
               </div>
               <div class="project-card__info">
                 <div class="work-type">{p.workType}</div>

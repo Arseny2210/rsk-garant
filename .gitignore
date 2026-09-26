@@ -13,3 +13,7 @@ dist
 .env.local
 .env.production
 .DS_Store
+
+# Исходные фото (6 ГБ) — вне сборки и репозитория
+_source/
+public/remont-img/

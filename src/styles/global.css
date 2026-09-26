@@ -2128,8 +2128,8 @@ main {
   max-width: 100%;
   max-height: calc(100dvh - 7.5rem);
   object-fit: contain;
-  border-radius: var(--radius-m);
-  background: rgba(0, 0, 0, 0.28);
+  border-radius: var(--radius-card);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .lightbox__ba {

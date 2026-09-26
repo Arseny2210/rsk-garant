@@ -4,8 +4,6 @@ export interface Project {
   workType: string;
   image: string;
   alt: string;
-  before?: string;
-  after?: string;
   /** Параметры объекта — заполняются только реальными данными. */
   area?: string;
   city?: string;
@@ -14,49 +12,51 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'project-01',
-    title: 'Ремонт ванной комнаты',
-    workType: 'Плиточные работы, сантехника',
-    image: '/images/projects/project-01-posle.webp',
-    alt: 'Отремонтированная ванная комната после ремонта',
-    before: '/images/projects/project-01-do.webp',
-    after: '/images/projects/project-01-posle.webp'
-  },
-  {
-    id: 'project-02',
-    title: 'Косметический ремонт комнаты',
-    workType: 'Оклейка обоев, напольное покрытие',
-    image: '/images/projects/project-02-posle.webp',
-    alt: 'Комната после косметического ремонта',
-    before: '/images/projects/project-02-do.webp',
-    after: '/images/projects/project-02-posle.webp'
-  },
-  {
-    id: 'project-03',
-    title: 'Ремонт ванной с укладкой плитки',
-    workType: 'Плиточные работы',
-    image: '/images/projects/project-03-vannaya.webp',
-    alt: 'Ванная комната с новой плиткой после ремонта'
-  },
-  {
-    id: 'project-04',
-    title: 'Многоуровневый натяжной потолок',
-    workType: 'Натяжные потолки, освещение',
-    image: '/images/projects/project-04-potolki.webp',
-    alt: 'Многоуровневый натяжной потолок со встроенным освещением'
-  },
-  {
-    id: 'project-05',
-    title: 'Установка межкомнатных дверей',
-    workType: 'Установка дверей',
-    image: '/images/projects/project-05-dveri.webp',
-    alt: 'Установленные межкомнатные двери в квартире'
-  },
-  {
-    id: 'project-06',
-    title: 'Комплексный ремонт квартиры',
+    id: 'lyubertsy-rozhdestvenskaya',
+    title: 'Ремонт квартиры под ключ',
     workType: 'Ремонт под ключ',
-    image: '/images/projects/project-06-kvartira.webp',
-    alt: 'Гостиная после комплексного ремонта квартиры'
+    image: '/images/projects/lyubertsy-rozhdestvenskaya/01.webp',
+    alt: 'Ремонт квартиры под ключ в Люберцах — пример выполненной работы',
+    city: 'Люберцы'
+  },
+  {
+    id: 'mytishchi-sanuzel',
+    title: 'Ремонт санузла',
+    workType: 'Ремонт санузлов',
+    image: '/images/projects/mytishchi-sanuzel/01.webp',
+    alt: 'Ремонт санузла в Мытищах — пример выполненной работы',
+    city: 'Мытищи'
+  },
+  {
+    id: 'lytkarino-peschannaya',
+    title: 'Ремонт новостройки под ключ',
+    workType: 'Ремонт под ключ',
+    image: '/images/projects/lytkarino-peschannaya/01.webp',
+    alt: 'Ремонт новостройки под ключ в Лыткарино — пример выполненной работы',
+    city: 'Лыткарино'
+  },
+  {
+    id: 'vykhino-cosmetic',
+    title: 'Косметический ремонт квартиры',
+    workType: 'Косметический ремонт',
+    image: '/images/projects/vykhino-cosmetic/01.webp',
+    alt: 'Косметический ремонт квартиры в Выхино — пример выполненной работы',
+    city: 'Москва'
+  },
+  {
+    id: 'rublevskoe-dom',
+    title: 'Ремонт частного дома',
+    workType: 'Ремонт под ключ',
+    image: '/images/projects/rublevskoe-dom/01.webp',
+    alt: 'Ремонт частного дома на Рублевском шоссе — пример выполненной работы',
+    city: 'Москва'
+  },
+  {
+    id: 'lytkarino-6-mkr',
+    title: 'Ремонт студии под ключ',
+    workType: 'Ремонт под ключ',
+    image: '/images/projects/lytkarino-6-mkr/01.webp',
+    alt: 'Ремонт студии под ключ в Лыткарино — пример выполненной работы',
+    city: 'Лыткарино'
   }
 ];

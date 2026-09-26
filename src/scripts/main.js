@@ -239,27 +239,12 @@ doc.querySelectorAll('.modal').forEach((dialog) => {
 const lightbox = doc.getElementById('lightbox');
 const lbImg = doc.getElementById('lightbox-img');
 const lbCaption = doc.getElementById('lightbox-caption');
-const lbBa = doc.getElementById('lightbox-ba');
 
-function openLightbox({ src, alt, caption, before, after }) {
+function openLightbox({ src, alt, caption }) {
   if (!lightbox || !lbImg) return;
   lbImg.src = src;
   lbImg.alt = alt || '';
   if (lbCaption) lbCaption.textContent = caption || '';
-
-  if (lbBa) {
-    if (before && after) {
-      lbBa.hidden = false;
-      lbBa.dataset.before = before;
-      lbBa.dataset.after = after;
-      const btns = lbBa.querySelectorAll('button');
-      btns.forEach((b) => b.classList.toggle('is-active', b.dataset.lb === 'after'));
-      lbImg.src = after;
-      lbImg.alt = alt || '';
-    } else {
-      lbBa.hidden = true;
-    }
-  }
 
   if (typeof lightbox.showModal === 'function') {
     lightbox.showModal();
@@ -276,8 +261,6 @@ doc.querySelectorAll('[data-lightbox]').forEach((trigger) => {
       src: trigger.dataset.src || img?.getAttribute('src') || '',
       alt: trigger.dataset.alt || img?.getAttribute('alt') || '',
       caption: trigger.dataset.caption || '',
-      before: trigger.dataset.before,
-      after: trigger.dataset.after,
     });
   });
 });
@@ -292,18 +275,6 @@ lightbox?.addEventListener('click', (e) => {
 
 lightbox?.addEventListener('close', () => {
   body.style.overflow = '';
-});
-
-lbBa?.querySelectorAll('button').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const mode = btn.dataset.lb;
-    const src = mode === 'before' ? lbBa.dataset.before : lbBa.dataset.after;
-    if (!src || !lbImg) return;
-    lbImg.src = src;
-    lbBa.querySelectorAll('button').forEach((b) =>
-      b.classList.toggle('is-active', b === btn)
-    );
-  });
 });
 
 doc.querySelectorAll('[data-lightbox]').forEach((t) => {
