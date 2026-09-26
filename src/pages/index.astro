@@ -11,7 +11,7 @@ import FinalCta from '../components/FinalCta.astro';
 import Contacts from '../components/Contacts.astro';
 import { company, SITE_URL } from '../data/company';
 import { mainServices } from '../data/services';
-import { projects } from '../data/projects';
+import { projects, projectImages } from '../data/projects';
 import { homeFaq } from '../data/faq';
 
 const title = 'Ремонт квартир в Москве и Московской области — РСК Гарант';
@@ -93,7 +93,6 @@ const servicesSchema = {
           height="1067"
           fetchpriority="high"
           data-lightbox
-          data-gallery="home-projects"
           data-caption="Пример готового интерьера после ремонта"
         />
       </div>
@@ -190,7 +189,8 @@ const servicesSchema = {
               <div
                 class="project-card__media"
                 data-lightbox
-                data-gallery="home-projects"
+                data-gallery={p.slug}
+                data-gallery-images={JSON.stringify(projectImages(p))}
                 data-caption={p.title}
               >
                 <img src={p.image} alt={p.alt} loading="lazy" width="1200" height="1600" />

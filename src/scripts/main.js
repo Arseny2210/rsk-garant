@@ -240,34 +240,49 @@ const lightbox = doc.getElementById('lightbox');
 const lbImg = doc.getElementById('lightbox-img');
 const lbCaption = doc.getElementById('lightbox-caption');
 const lbCounter = doc.getElementById('lightbox-counter');
+const lbDots = doc.getElementById('lightbox-dots');
 const lbPrev = doc.querySelector('[data-lightbox-prev]');
 const lbNext = doc.querySelector('[data-lightbox-next]');
 
 const galleries = new Map();
-const galleryItems = [];
 
 function resolveItem(trigger) {
   const img = trigger.tagName === 'IMG' ? trigger : trigger.querySelector('img');
-  return {
+  const item = {
     src: trigger.dataset.src || img?.getAttribute('src') || '',
     alt: trigger.dataset.alt || img?.getAttribute('alt') || '',
     caption: trigger.dataset.caption || '',
   };
+
+  // встроенный список фото (у проекта на главной) — строго по теме
+  let embedded = null;
+  if (trigger.dataset.galleryImages) {
+    try {
+      embedded = JSON.parse(trigger.dataset.galleryImages).map((src) => ({
+        ...item,
+        src,
+        alt: item.alt || '',
+      }));
+    } catch {
+      embedded = null;
+    }
+  }
+  return { item, embedded };
 }
 
 doc.querySelectorAll('[data-lightbox]').forEach((trigger) => {
   const group = trigger.dataset.gallery;
-  const item = resolveItem(trigger);
+  const { item, embedded } = resolveItem(trigger);
 
-  if (group) {
+  if (group && !embedded) {
     if (!galleries.has(group)) galleries.set(group, []);
-    galleries.get(group).push({ ...item, element: trigger });
-    galleryItems.push(trigger);
+    galleries.get(group).push(item);
   }
 
   trigger.addEventListener('click', (e) => {
     if (e.target.closest('button')) return;
-    openLightbox(item, group ? Array.from(galleries.get(group)) : null);
+    const list = embedded || (group ? Array.from(galleries.get(group)) : null);
+    openLightbox(item, list);
   });
 });
 
@@ -275,7 +290,8 @@ function openLightbox(item, list) {
   if (!lightbox || !lbImg) return;
 
   window._lbList = list;
-  window._lbIndex = list ? list.findIndex((it) => it.src === item.src) : -1;
+  window._lbIndex = list && list.length ? list.findIndex((it) => it.src === item.src) : -1;
+  if (list && window._lbIndex < 0) window._lbIndex = 0;
 
   renderLightbox();
   if (typeof lightbox.showModal === 'function') {
@@ -298,13 +314,32 @@ function renderLightbox() {
   }
   if (lbPrev) lbPrev.style.display = list.length > 1 ? '' : 'none';
   if (lbNext) lbNext.style.display = list.length > 1 ? '' : 'none';
+
+  if (lbDots) {
+    lbDots.innerHTML = '';
+    if (list.length > 1) {
+      list.forEach((it, i) => {
+        const dot = doc.createElement('button');
+        dot.type = 'button';
+        dot.className = 'lightbox__dot' + (i === index ? ' is-active' : '');
+        dot.setAttribute('aria-label', `Фото ${i + 1} из ${list.length}`);
+        dot.addEventListener('click', () => {
+          window._lbIndex = i;
+          renderLightbox();
+        });
+        lbDots.appendChild(dot);
+      });
+      lbDots.style.display = '';
+    } else {
+      lbDots.style.display = 'none';
+    }
+  }
 }
 
 function stepLightbox(dir) {
   const list = window._lbList;
   if (!list || list.length < 2) return;
-  window._lbIndex =
-    (window._lbIndex + dir + list.length) % list.length;
+  window._lbIndex = (window._lbIndex + dir + list.length) % list.length;
   renderLightbox();
 }
 
