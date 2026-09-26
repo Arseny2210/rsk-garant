@@ -20,6 +20,14 @@ export function projectImages(p: Project): string[] {
 
 export const projects: Project[] = [
   {
+    id: 'pod-klutch',
+    count: 9,
+    title: 'Ремонт квартиры под ключ',
+    workType: 'Ремонт под ключ',
+    image: '/images/projects/pod-klutch/01.webp',
+    alt: 'Ремонт квартиры под ключ — пример выполненной работы'
+  },
+  {
     id: 'lyubertsy-rozhdestvenskaya',
     count: 16,
     title: 'Ремонт квартиры под ключ',
