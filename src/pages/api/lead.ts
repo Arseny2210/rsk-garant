@@ -22,6 +22,13 @@ function allowedOrigin(req: Request): boolean {
   const origin = req.headers.get('origin');
   if (!origin) return false;
 
+  // Запросы с того же хоста, где открыт сайт, всегда разрешены:
+  // покрывает onrender-поддомен, пользовательский домен и локальный запуск.
+  const host = req.headers.get('x-forwarded-host') || req.headers.get('host');
+  if (host && (origin === `https://${host}` || origin === `http://${host}`)) {
+    return true;
+  }
+
   const site = (process.env.SITE as string | undefined) || 'https://rsk-garant.ru';
   const envOrigins = (process.env.ALLOWED_ORIGINS as string | undefined)?.split(',').map((s) => s.trim()).filter(Boolean) || [];
 
