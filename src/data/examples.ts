@@ -1,86 +1,25 @@
+import { projects, projectImages } from './projects';
+
 export interface ExampleImage {
   src: string;
   alt: string;
 }
 
-export const serviceExamples: Record<string, ExampleImage[]> = {
-  'remont-pod-klyuch': [
-    { src: '/images/projects/pod-klutch/01.webp', alt: 'Ремонт квартиры под ключ — пример выполненной работы' },
-    { src: '/images/projects/pod-klutch/02.webp', alt: 'Ремонт квартиры под ключ — пример выполненной работы' },
-    { src: '/images/projects/pod-klutch/03.webp', alt: 'Ремонт квартиры под ключ — пример выполненной работы' },
-    { src: '/images/projects/pod-klutch/04.webp', alt: 'Ремонт квартиры под ключ — пример выполненной работы' },
-    { src: '/images/projects/pod-klutch/05.webp', alt: 'Ремонт квартиры под ключ — пример выполненной работы' },
-    { src: '/images/projects/pod-klutch/06.webp', alt: 'Ремонт квартиры под ключ — пример выполненной работы' },
-    { src: '/images/projects/pod-klutch/07.webp', alt: 'Ремонт квартиры под ключ — пример выполненной работы' },
-    { src: '/images/projects/pod-klutch/08.webp', alt: 'Ремонт квартиры под ключ — пример выполненной работы' },
-  ],
-  'kosmeticheskiy-remont-komnaty': [
-    { src: '/images/projects/kosmet-rem/01.webp', alt: 'Косметический ремонт — пример выполненной работы' },
-    { src: '/images/projects/kosmet-rem/02.webp', alt: 'Косметический ремонт — пример выполненной работы' },
-    { src: '/images/projects/kosmet-rem/03.webp', alt: 'Косметический ремонт — пример выполненной работы' },
-    { src: '/images/projects/kosmet-rem/04.webp', alt: 'Косметический ремонт — пример выполненной работы' },
-    { src: '/images/projects/kosmet-rem/05.webp', alt: 'Косметический ремонт — пример выполненной работы' },
-    { src: '/images/projects/kosmet-rem/06.webp', alt: 'Косметический ремонт — пример выполненной работы' },
-    { src: '/images/projects/kosmet-rem/07.webp', alt: 'Косметический ремонт — пример выполненной работы' },
-    { src: '/images/projects/kosmet-rem/08.webp', alt: 'Косметический ремонт — пример выполненной работы' },
-  ],
-  'remont-sanuzlov': [
-    { src: '/images/projects/sanuzel/01.webp', alt: 'Ремонт санузла — пример выполненной работы' },
-    { src: '/images/projects/sanuzel/02.webp', alt: 'Ремонт санузла — пример выполненной работы' },
-    { src: '/images/projects/sanuzel/03.webp', alt: 'Ремонт санузла — пример выполненной работы' },
-    { src: '/images/projects/sanuzel/04.webp', alt: 'Ремонт санузла — пример выполненной работы' },
-    { src: '/images/projects/sanuzel/05.webp', alt: 'Ремонт санузла — пример выполненной работы' },
-    { src: '/images/projects/sanuzel/06.webp', alt: 'Ремонт санузла — пример выполненной работы' },
-    { src: '/images/projects/sanuzel/07.webp', alt: 'Ремонт санузла — пример выполненной работы' },
-  ],
-  'plitochnye-raboty': [
-    { src: '/images/projects/plitka/01.webp', alt: 'Плиточные работы — пример выполненной работы' },
-    { src: '/images/projects/plitka/02.webp', alt: 'Плиточные работы — пример выполненной работы' },
-    { src: '/images/projects/plitka/03.webp', alt: 'Плиточные работы — пример выполненной работы' },
-    { src: '/images/projects/plitka/04.webp', alt: 'Плиточные работы — пример выполненной работы' },
-    { src: '/images/projects/plitka/05.webp', alt: 'Плиточные работы — пример выполненной работы' },
-    { src: '/images/projects/plitka/06.webp', alt: 'Плиточные работы — пример выполненной работы' },
-    { src: '/images/projects/plitka/07.webp', alt: 'Плиточные работы — пример выполненной работы' },
-    { src: '/images/projects/plitka/08.webp', alt: 'Плиточные работы — пример выполненной работы' },
-  ],
-  'okleyka-oboev': [
-    { src: '/images/projects/oboi/01.webp', alt: 'Оклейка обоев — пример выполненной работы' },
-    { src: '/images/projects/oboi/02.webp', alt: 'Оклейка обоев — пример выполненной работы' },
-    { src: '/images/projects/oboi/03.webp', alt: 'Оклейка обоев — пример выполненной работы' },
-    { src: '/images/projects/oboi/04.webp', alt: 'Оклейка обоев — пример выполненной работы' },
-    { src: '/images/projects/oboi/05.webp', alt: 'Оклейка обоев — пример выполненной работы' },
-    { src: '/images/projects/oboi/06.webp', alt: 'Оклейка обоев — пример выполненной работы' },
-    { src: '/images/projects/oboi/07.webp', alt: 'Оклейка обоев — пример выполненной работы' },
-    { src: '/images/projects/oboi/08.webp', alt: 'Оклейка обоев — пример выполненной работы' },
-  ],
-  'ukladka-laminata': [
-    { src: '/images/projects/laminat/01.webp', alt: 'Укладка ламината — пример выполненной работы' },
-    { src: '/images/projects/laminat/02.webp', alt: 'Укладка ламината — пример выполненной работы' },
-    { src: '/images/projects/laminat/03.webp', alt: 'Укладка ламината — пример выполненной работы' },
-    { src: '/images/projects/laminat/04.webp', alt: 'Укладка ламината — пример выполненной работы' },
-    { src: '/images/projects/laminat/05.webp', alt: 'Укладка ламината — пример выполненной работы' },
-    { src: '/images/projects/laminat/06.webp', alt: 'Укладка ламината — пример выполненной работы' },
-    { src: '/images/projects/laminat/07.webp', alt: 'Укладка ламината — пример выполненной работы' },
-    { src: '/images/projects/laminat/08.webp', alt: 'Укладка ламината — пример выполненной работы' },
-  ],
-  'natyazhnye-potolki': [
-    { src: '/images/projects/nat-potolki/01.webp', alt: 'Натяжные потолки — пример выполненной работы' },
-    { src: '/images/projects/nat-potolki/02.webp', alt: 'Натяжные потолки — пример выполненной работы' },
-    { src: '/images/projects/nat-potolki/03.webp', alt: 'Натяжные потолки — пример выполненной работы' },
-    { src: '/images/projects/nat-potolki/04.webp', alt: 'Натяжные потолки — пример выполненной работы' },
-    { src: '/images/projects/nat-potolki/05.webp', alt: 'Натяжные потолки — пример выполненной работы' },
-    { src: '/images/projects/nat-potolki/06.webp', alt: 'Натяжные потолки — пример выполненной работы' },
-    { src: '/images/projects/nat-potolki/07.webp', alt: 'Натяжные потолки — пример выполненной работы' },
-    { src: '/images/projects/nat-potolki/08.webp', alt: 'Натяжные потолки — пример выполненной работы' },
-  ],
-  'ustanovka-dverey': [
-    { src: '/images/projects/dveri/01.webp', alt: 'Установка дверей — пример выполненной работы' },
-    { src: '/images/projects/dveri/02.webp', alt: 'Установка дверей — пример выполненной работы' },
-    { src: '/images/projects/dveri/03.webp', alt: 'Установка дверей — пример выполненной работы' },
-    { src: '/images/projects/dveri/04.webp', alt: 'Установка дверей — пример выполненной работы' },
-    { src: '/images/projects/dveri/05.webp', alt: 'Установка дверей — пример выполненной работы' },
-    { src: '/images/projects/dveri/06.webp', alt: 'Установка дверей — пример выполненной работы' },
-    { src: '/images/projects/dveri/07.webp', alt: 'Установка дверей — пример выполненной работы' },
-    { src: '/images/projects/dveri/08.webp', alt: 'Установка дверей — пример выполненной работы' },
-  ],
+const SERVICE_FOLDER: Record<string, string> = {
+  'remont-pod-klyuch': 'pod-klutch',
+  'kosmeticheskiy-remont-komnaty': 'kosmet-rem',
+  'remont-sanuzlov': 'sanuzel',
+  'plitochnye-raboty': 'plitka',
+  'okleyka-oboev': 'oboi',
+  'ukladka-laminata': 'laminat',
+  'natyazhnye-potolki': 'nat-potolki',
+  'ustanovka-dverey': 'dveri',
 };
+
+/** Все фото категории для блока «Примеры работ» на лендинге услуги. */
+export function serviceImages(serviceId: string): ExampleImage[] {
+  const folder = SERVICE_FOLDER[serviceId];
+  const project = projects.find((p) => p.id === folder);
+  if (!project) return [];
+  return projectImages(project).map((src) => ({ src, alt: project.alt }));
+}

@@ -42,6 +42,50 @@ for (let i = 0; i < n; i++) {
 }
 
 if (errors.length) console.log('Ошибки JS:', errors);
+
+/* ---------- страницы категорий: один article со всеми фото ---------- */
+const CATEGORY_TESTS = [
+  { path: '/plitochnye-raboty/', folder: 'plitka' },
+  { path: '/remont-pod-klyuch/', folder: 'pod-klutch' },
+];
+for (const t of CATEGORY_TESTS) {
+  await page.goto(BASE + t.path, { waitUntil: 'networkidle' });
+  const articles = page.locator('#examples article.examples-article');
+  const count = await articles.count();
+  const tiles = page.locator('#examples .example-tile');
+  const tileCount = await tiles.count();
+  let ok = count === 1 && tileCount > 0;
+
+  if (ok) {
+    await tiles.first().click();
+    await page.waitForTimeout(250);
+    const open = await page.evaluate(() => document.getElementById('lightbox').open);
+    const counter = open ? (await page.locator('#lightbox-counter').textContent()).trim() : '—';
+    const expected = `1 / ${tileCount}`;
+    ok = open && counter === expected;
+    console.log(
+      `${ok ? 'OK  ' : 'FAIL'} | ${t.path} | article:${count} | фото:${tileCount} | лайтбокс: ${counter}`
+    );
+    if (!ok) fail++;
+    if (open) {
+      const src1 = await page.locator('#lightbox-img').getAttribute('src');
+      await page.locator('[data-lightbox-next]').click();
+      await page.waitForTimeout(200);
+      const src2 = await page.locator('#lightbox-img').getAttribute('src');
+      if (src1 === src2) {
+        console.log('   ПРОБЛЕМА: фото не перелистывается');
+        fail++;
+      }
+      await page.locator('[data-lightbox-close]').click();
+      await page.waitForTimeout(150);
+    }
+  } else {
+    console.log(`FAIL | ${t.path} | article:${count} | фото:${tileCount}`);
+    fail++;
+  }
+}
+
+if (errors.length) console.log('Ошибки JS:', errors);
 console.log(fail === 0 ? '=== ВСЕ КАРТОЧКИ ОТКРЫВАЮТСЯ И ЛИСТАЮТСЯ ===' : `=== ПРОБЛЕМ: ${fail} ===`);
 await browser.close();
 process.exit(fail === 0 && errors.length === 0 ? 0 : 1);
