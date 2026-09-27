@@ -11,8 +11,14 @@ const address = company.address !== '[ADDRESS]' ? company.address : '';
     <div class="footer__top">
       <div class="footer__brand">
         <a class="logo" href="/" aria-label="РСК Гарант — на главную">
-          <span class="logo__mark" aria-hidden="true"></span>
-          <span class="logo__name">{company.name}</span>
+          <img
+            class="logo__img"
+            src="/logo.webp"
+            alt="РСК Гарант"
+            width="240"
+            height="160"
+            loading="lazy"
+          />
         </a>
         <p>Ремонт квартир и отдельные строительные работы в Москве и Московской области.</p>
       </div>
