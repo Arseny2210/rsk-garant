@@ -6,54 +6,60 @@ const address = company.address !== '[ADDRESS]' ? company.address : '';
 
 <section class="section section--soft" id="contacts" aria-labelledby="contacts-title">
   <div class="container">
-    <div class="sec-head">
-      <div>
+    <div class="contacts-layout">
+      <div class="contacts-intro">
         <div class="sec-head__label">Контакты</div>
         <h2 id="contacts-title">Свяжитесь с нами</h2>
-      </div>
-    </div>
-
-    <div class="contacts-grid reveal-stagger">
-      <div class="contact-card">
-        <div class="label">Телефон</div>
-        <a href={company.phoneHref}>{company.phone}</a>
-        <div class="sub"><a href={company.phoneAltHref}>{company.phoneAlt}</a></div>
+        <p>Позвоните или напишите — подскажем по стоимости и срокам, договоримся об осмотре объекта и замере.</p>
+        <a class="btn btn--primary" href={company.phoneHref}>
+          Позвонить
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
       </div>
 
-      <div class="contact-card">
-        <div class="label">Мессенджеры</div>
-        <div class="messenger-links">
-          <a
-            class="messenger-link"
-            href={company.whatsapp}
-            target="_blank"
-            rel="noopener"
-            data-track-messenger="whatsapp"
-          >
-            <span class="dot" aria-hidden="true"></span>
-            WhatsApp
-          </a>
-          <a
-            class="messenger-link"
-            href={company.telegram}
-            target="_blank"
-            rel="noopener"
-            data-track-messenger="telegram"
-          >
-            <span class="dot" aria-hidden="true"></span>
-            Telegram
-          </a>
-        </div>
-        <div class="sub">
-          <a href={`mailto:${company.email}`}>{company.email}</a>
-        </div>
-      </div>
-
-      <div class="contact-card">
-        <div class="label">Регион работ</div>
-        <span class="value">{company.cityNominative} и {company.region}</span>
-        {address && <div class="sub">{address}</div>}
-      </div>
+      <ul class="contacts-list reveal-stagger">
+        <li>
+          <span class="contacts-list__label">Телефон</span>
+          <span class="contacts-list__value">
+            <a href={company.phoneHref}>{company.phone}</a>
+          </span>
+        </li>
+        <li>
+          <span class="contacts-list__label">Дополнительный телефон</span>
+          <span class="contacts-list__value">
+            <a href={company.phoneAltHref}>{company.phoneAlt}</a>
+          </span>
+        </li>
+        <li>
+          <span class="contacts-list__label">Мессенджеры</span>
+          <span class="contacts-list__value contacts-list__value--inline">
+            <a href={company.whatsapp} target="_blank" rel="noopener" data-track-messenger="whatsapp">
+              WhatsApp
+            </a>
+            <a href={company.telegram} target="_blank" rel="noopener" data-track-messenger="telegram">
+              Telegram
+            </a>
+          </span>
+        </li>
+        <li>
+          <span class="contacts-list__label">Почта</span>
+          <span class="contacts-list__value">
+            <a href={`mailto:${company.email}`}>{company.email}</a>
+          </span>
+        </li>
+        <li>
+          <span class="contacts-list__label">Регион работ</span>
+          <span class="contacts-list__value">
+            {company.cityNominative} и {company.region}
+          </span>
+        </li>
+        {address && (
+          <li>
+            <span class="contacts-list__label">Адрес</span>
+            <span class="contacts-list__value">{address}</span>
+          </li>
+        )}
+      </ul>
     </div>
   </div>
 </section>

@@ -4,96 +4,25 @@ import { additionalServices } from '../data/services';
 
 <section class="section section--soft" id="additional" aria-labelledby="additional-title">
   <div class="container">
-    <div class="sec-head sec-head--row">
+    <div class="sec-head">
       <div>
         <div class="sec-head__label">Дополнительно</div>
         <h2 id="additional-title">Также выполняем</h2>
-        <p>Отдельные виды строительных и отделочных работ в рамках ремонта или как самостоятельный заказ.</p>
+        <p>Отдельные виды строительных и отделочных работ — в рамках ремонта или как самостоятельный заказ.</p>
       </div>
     </div>
 
-    <div class="additional-grid reveal-stagger">
+    <ul class="add-list reveal-stagger">
       {
         additionalServices.map((s) => (
-          <button
-            class="add-service"
-            type="button"
-            data-modal-open={'modal-' + s.id}
-            aria-haspopup="dialog"
-          >
-            <h3>{s.title}</h3>
-            <p>{s.description}</p>
-            <span class="btn btn--ghost btn--sm">
-              Посмотреть работы
-              <span class="btn__arrow" aria-hidden="true">→</span>
-            </span>
-          </button>
+          <li>
+            <button type="button" data-open-form={s.title}>
+              <h3>{s.title}</h3>
+              <p>{s.description}</p>
+            </button>
+          </li>
         ))
       }
-    </div>
+    </ul>
   </div>
-
-  {
-    additionalServices.map((s) => (
-      <dialog
-        class="modal"
-        id={'modal-' + s.id}
-        data-service={s.title}
-        aria-label={s.title}
-      >
-        <div class="modal__header">
-          <h2>{s.title}</h2>
-          <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-            </svg>
-          </button>
-        </div>
-
-        <div class="modal__body">
-          <p class="modal__desc">{s.description}</p>
-
-          <div>
-            <div class="sec-head__label">Примеры работ</div>
-            {
-              s.images.length ? (
-                <div class="modal__gallery">
-                  {
-                    s.images.map((img) => (
-                      <figure>
-                        <img
-                          src={img.src}
-                          alt={img.alt}
-                          loading="lazy"
-                          width="640"
-                          height="480"
-                          data-lightbox
-                          data-gallery={'add-' + s.id}
-                          data-caption={img.caption || s.title}
-                        />
-                        <figcaption>{img.caption}</figcaption>
-                      </figure>
-                    ))
-                  }
-                </div>
-              ) : (
-                <div class="gallery-empty">
-                  Здесь будут примеры выполненных работ.
-                  <br />
-                  Напишите нам — покажем фото по конкретной задаче.
-                </div>
-              )
-            }
-          </div>
-
-          <div class="modal__cta">
-            <button class="btn btn--primary" type="button" data-modal-cta>
-              Получить расчет
-            </button>
-            <span class="note">Ответим в рабочее время</span>
-          </div>
-        </div>
-      </dialog>
-    ))
-  }
 </section>

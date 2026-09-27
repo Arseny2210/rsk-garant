@@ -179,62 +179,6 @@ doc.querySelectorAll('.before-after').forEach((ba) => {
   });
 });
 
-/* ---------- модальные окна (native <dialog>) ---------- */
-let lastFocused = null;
-
-doc.querySelectorAll('[data-modal-open]').forEach((trigger) => {
-  trigger.addEventListener('click', () => {
-    const id = trigger.dataset.modalOpen;
-    const dialog = doc.getElementById(id);
-    if (!dialog) return;
-    if (typeof dialog.showModal === 'function') {
-      lastFocused = doc.activeElement;
-      dialog.showModal();
-      dialog.querySelector('[data-modal-close]')?.focus();
-      body.style.overflow = 'hidden';
-      window.RSK_TRACK('additional_service_open', {
-        service: dialog.dataset.service || id
-      });
-    }
-  });
-});
-
-doc.querySelectorAll('.modal').forEach((dialog) => {
-  const closeBtn = dialog.querySelector('[data-modal-close]');
-
-  closeBtn?.addEventListener('click', () => {
-    dialog.close();
-  });
-
-  dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) dialog.close();
-  });
-
-  dialog.addEventListener('close', () => {
-    body.style.overflow = '';
-    lastFocused?.focus();
-  });
-
-  dialog.querySelectorAll('[data-modal-cta]').forEach((cta) => {
-    cta.addEventListener('click', () => {
-      dialog.close();
-      const form = doc.querySelector('#lead-form');
-      if (form) {
-        const serviceInput = form.querySelector('[name="service"]');
-        if (serviceInput && dialog.dataset.service) {
-          serviceInput.value = dialog.dataset.service;
-        }
-        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        setTimeout(() => {
-          const firstField = form.querySelector('input[name="name"], input[name="phone"]');
-          firstField?.focus();
-        }, 500);
-        window.RSK_TRACK('lead_form_open', { source: 'modal' });
-      }
-    });
-  });
-});
-
 /* ---------- lightbox (просмотр фото) ---------- */
 const lightbox = doc.getElementById('lightbox');
 const lbImg = doc.getElementById('lightbox-img');
@@ -549,6 +493,14 @@ doc.querySelectorAll('.lead-form').forEach((form) => {
   const submitBtn = form.querySelector('button[type="submit"]');
   const statusBox = form.querySelector('.form-status');
   const consentWrap = form.querySelector('.consent');
+  const consentInput = form.querySelector('input[name="consent"]');
+
+  // Кнопка отправки недоступна, пока не подтверждено согласие с политикой.
+  const syncSubmitState = () => {
+    if (submitBtn && consentInput) submitBtn.disabled = !consentInput.checked;
+  };
+  consentInput?.addEventListener('change', syncSubmitState);
+  syncSubmitState();
 
   const setInvalid = (field, invalid) => {
     const wrap = field.closest('.field');
@@ -663,7 +615,7 @@ doc.querySelectorAll('.lead-form').forEach((form) => {
         'Попробуйте еще раз или позвоните нам.'
       );
     } finally {
-      submitBtn.disabled = false;
+      syncSubmitState();
       submitBtn.textContent = submitBtn.dataset.label || 'Отправить';
     }
   });
