@@ -1,5 +1,8 @@
 import type { APIRoute } from 'astro';
+import { loadLocalEnv } from '../../lib/env';
 import { sendToTelegram, isTelegramConfigured } from '../../lib/telegram';
+
+loadLocalEnv();
 
 export const prerender = false;
 

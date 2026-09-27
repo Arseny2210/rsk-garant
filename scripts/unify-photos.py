@@ -41,7 +41,10 @@ def to_vertical(src_path, out_path):
     im = ImageOps.exif_transpose(im).convert("RGB")
     w, h = im.size
 
-    if w > h:
+    if (w, h) == (TW, TH):
+        canvas = im
+    else:
+        # фон: размытая увеличенная копия на весь холст — без чёрных полос
         bg = cover_resize(im, TW, TH)
         bg = bg.filter(ImageFilter.GaussianBlur(60))
         bg = ImageEnhance.Brightness(bg).enhance(0.45)
@@ -51,14 +54,6 @@ def to_vertical(src_path, out_path):
         x, y = (TW - fg.width) // 2, (TH - fg.height) // 2
         bg.paste(fg, (x, y))
         canvas = bg
-    else:
-        canvas = im.copy()
-        canvas.thumbnail((TW, TH), Image.LANCZOS)
-        if canvas.size != (TW, TH):
-            pad = Image.new("RGB", (TW, TH), (24, 22, 19))
-            x, y = (TW - canvas.width) // 2, (TH - canvas.height) // 2
-            pad.paste(canvas, (x, y))
-            canvas = pad
 
     canvas.save(out_path, "WEBP", quality=QUALITY, method=6)
 

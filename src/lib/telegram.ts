@@ -26,6 +26,7 @@ export function isTelegramConfigured(): boolean {
 
 /**
  * Отправляет текст в указанный чат Telegram через sendMessage.
+ * Несколько попыток на случай кратковременных сбоев сети.
  */
 export async function sendToTelegram({
   chatId,
@@ -38,30 +39,44 @@ export async function sendToTelegram({
   }
 
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
+  const MAX_ATTEMPTS = 3;
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-  try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 10000);
 
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text }),
-      signal: controller.signal,
-    });
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text }),
+        signal: controller.signal,
+      });
 
-    clearTimeout(timer);
+      clearTimeout(timer);
 
-    const data = await res.json().catch(() => null);
+      const data = await res.json().catch(() => null);
 
-    if (!res.ok || !data?.ok) {
+      if (res.ok && data?.ok) {
+        return { ok: true };
+      }
+
+      if (attempt < MAX_ATTEMPTS) {
+        await sleep(attempt * 1000);
+        continue;
+      }
       return { ok: false, error: `Telegram API responded with status ${res.status}` };
+    } catch (err) {
+      if (attempt < MAX_ATTEMPTS) {
+        await sleep(attempt * 1000);
+        continue;
+      }
+      const message = err instanceof Error ? err.message : 'network error';
+      console.error('[telegram] send failed:', message);
+      return { ok: false, error: 'Telegram API unreachable' };
     }
-
-    return { ok: true };
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'network error';
-    console.error('[telegram] send failed:', message);
-    return { ok: false, error: 'Telegram API unreachable' };
   }
+
+  return { ok: false, error: 'Telegram API unreachable' };
 }
