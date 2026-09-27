@@ -1436,7 +1436,12 @@ main {
 .consent-error {
   display: none;
   font-size: var(--text-sm);
-  color: var(--color-error);
+  color: var(--color-text);
+  background: var(--color-accent-soft);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  padding: 0.55rem 0.9rem;
+  line-height: 1.5;
 }
 
 .consent.is-invalid ~ .consent-error,
@@ -1446,24 +1451,43 @@ main {
 
 .form-status {
   display: none;
-  padding: 1.1rem 1.3rem;
-  border-radius: var(--radius-s);
-  font-size: var(--text-base);
+  position: relative;
+  padding: 1.05rem 1.3rem;
+  border-radius: var(--radius-m);
+  font-size: var(--text-sm);
   line-height: 1.5;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-status b {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
 }
 
 .form-status--success {
   display: block;
-  background: rgba(63, 124, 87, 0.1);
-  border: 1px solid rgba(63, 124, 87, 0.4);
+  background: rgba(63, 124, 87, 0.08);
+  border: 1px solid rgba(63, 124, 87, 0.35);
   color: var(--color-success);
 }
 
 .form-status--error {
   display: block;
-  background: rgba(179, 72, 60, 0.08);
-  border: 1px solid rgba(179, 72, 60, 0.4);
-  color: var(--color-error);
+  background: var(--color-surface-warm);
+  border: 1px solid rgba(160, 126, 88, 0.4);
+  color: var(--color-text);
+}
+
+.form-status--error::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.85rem;
+  bottom: 0.85rem;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--color-accent), #c19a6e);
 }
 
 /* ---------- FAQ ---------- */
@@ -2245,14 +2269,22 @@ button[disabled] {
 
 /* ---------- примечание формы ---------- */
 .lead-form__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
   font-size: var(--text-sm);
   color: var(--color-muted);
   line-height: 1.5;
 }
 
 .lead-form__note::before {
-  content: "— ";
-  color: var(--color-accent);
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 0.45rem;
 }
 
 /* ---------- калькулятор ---------- */

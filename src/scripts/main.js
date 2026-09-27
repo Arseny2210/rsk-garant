@@ -555,7 +555,7 @@ doc.querySelectorAll('.lead-form').forEach((form) => {
   const showStatus = (type, title, text) => {
     if (!statusBox) return;
     statusBox.className = 'form-status form-status--' + type;
-    statusBox.innerHTML = '<b>' + title + '</b><br>' + text;
+    statusBox.innerHTML = '<b>' + title + '</b>' + text;
     statusBox.setAttribute('role', 'status');
     statusBox.focus?.();
   };
