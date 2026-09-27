@@ -10,7 +10,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "start": "node ./dist/server/entry.mjs",
+    "start": "node --env-file-if-exists=.env ./dist/server/entry.mjs",
     "check": "astro check"
   },
   "dependencies": {
