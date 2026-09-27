@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { sendToMax, isMaxConfigured } from '../../lib/max';
+import { sendToTelegram, isTelegramConfigured } from '../../lib/telegram';
 
 export const prerender = false;
 
@@ -178,16 +178,16 @@ export const POST: APIRoute = async ({ request }) => {
     .filter((line) => line !== '')
     .join('\n');
 
-  if (!isMaxConfigured()) {
-    console.error('[lead] MAX is not configured. Lead skipped.');
+  if (!isTelegramConfigured()) {
+    console.error('[lead] Telegram is not configured. Lead skipped.');
     return new Response(JSON.stringify({ status: 'error', error: 'delivery not configured' }), {
       status: 503,
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
-  const chatId = (process.env.MAX_CHAT_ID as string)?.trim();
-  const result = await sendToMax({ chatId, text: message });
+  const chatId = (process.env.TELEGRAM_CHAT_ID as string)?.trim();
+  const result = await sendToTelegram({ chatId, text: message });
 
   if (!result.ok) {
     return new Response(JSON.stringify({ status: 'error', error: 'delivery failed' }), {

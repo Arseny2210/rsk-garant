@@ -13,9 +13,7 @@ services:
       # отклоняться проверкой Origin. Пример: https://rsk-garant.onrender.com
       - key: ALLOWED_ORIGINS
         value: https://rsk-garant.ru
-      - key: MAX_API_BASE
-        value: https://platform-api2.max.ru/
-      - key: MAX_BOT_TOKEN
+      - key: TELEGRAM_BOT_TOKEN
         sync: false
-      - key: MAX_CHAT_ID
+      - key: TELEGRAM_CHAT_ID
         sync: false

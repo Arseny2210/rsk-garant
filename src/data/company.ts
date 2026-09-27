@@ -18,8 +18,6 @@ export const company = {
   telegram: 'https://t.me/rskgarant',
   whatsapp: 'https://wa.me/+79252448442',
   privacyEmail: '[PRIVACY_EMAIL]',
-  maxBotUrl: '[MAX_BOT_URL]',
-  maxChatId: '[MAX_CHAT_ID]',
   description:
     'Ремонт квартир и отдельные строительные работы. Выполняем ремонт под ключ, отделочные и строительные работы в Москве и Московской области.',
 };
