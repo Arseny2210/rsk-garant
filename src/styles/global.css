@@ -2471,6 +2471,16 @@ input[type="number"] {
   margin: 2.5rem 0 0.9rem;
 }
 
+.privacy h3 {
+  font-size: 1.1rem;
+  margin: 1.6rem 0 0.6rem;
+}
+
+.privacy strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
 .privacy p,
 .privacy li {
   color: var(--color-muted);
