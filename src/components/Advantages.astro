@@ -1,0 +1,38 @@
+---
+const advantages = [
+  {
+    title: 'Оплата по мере выполнения',
+    text: 'Выполнили работу, показали результат, вы приняли и оплатили. Не нужно оплачивать весь ремонт сразу.',
+  },
+  {
+    title: 'Три собственных магазина',
+    text: 'Подберём, купим и доставим черновые материалы. В Лыткарино их можно посмотреть и выбрать лично.',
+  },
+  {
+    title: 'Более 15 лет в ремонте',
+    text: 'Одна команда выполнит электрику, сантехнику, плитку, отделку, потолки и установку дверей.',
+  },
+  {
+    title: 'Соблюдаем режим тишины',
+    text: 'Шумные работы не проводим с 13:00 до 15:00 и соблюдаем установленный порядок ремонта.',
+  },
+];
+---
+
+<section class="section advantages" aria-labelledby="advantages-title">
+  <div class="container">
+    <div class="advantages__head">
+      <div class="sec-head__label">Наш подход</div>
+      <h2 id="advantages-title">Ремонт без лишних забот</h2>
+      <p>Берём на себя организацию работ и комплектацию, а вы контролируете понятный результат каждого этапа.</p>
+    </div>
+    <div class="advantages__grid reveal-stagger">
+      {advantages.map((advantage) => (
+        <article class="advantage-item">
+          <h3>{advantage.title}</h3>
+          <p>{advantage.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,74 @@
+---
+import { getMainService } from '../data/services';
+
+interface Props {
+  serviceId?: string;
+  compact?: boolean;
+}
+
+const { serviceId = '', compact = false } = Astro.props;
+
+const offersByService: Record<string, { title: string; text: string }[]> = {
+  'remont-pod-klyuch': [
+    { title: 'Скидка 10 000 ₽ на ремонт под ключ', text: 'Оставьте заявку, чтобы рассчитать стоимость и закрепить предложение.' },
+    { title: 'Натяжной потолок в подарок', text: 'При ремонте квартиры или комнаты под ключ.' },
+  ],
+  'natyazhnye-potolki': [
+    { title: 'Скидка на натяжные потолки до 10 000 ₽', text: 'Рассчитаем выгоду после замера и подбора решения.' },
+    { title: 'Третий потолок в подарок', text: 'При заказе трёх натяжных потолков.' },
+  ],
+  'ustanovka-dverey': [
+    { title: 'Третья дверь в подарок', text: 'При покупке двух межкомнатных дверей.' },
+  ],
+};
+
+const repairDiscount = { title: 'Скидка 5% на ремонт под ключ', text: 'Уточните у менеджера, какое предложение будет выгоднее для вашего объекта.' };
+const socialDiscount = { title: 'Специальные скидки до 25%', text: 'Для пенсионеров, людей с инвалидностью и участников СВО.' };
+
+const offers = serviceId ? [
+  ...(offersByService[serviceId] || []),
+  ...(serviceId === 'remont-pod-klyuch' ? [repairDiscount] : []),
+  socialDiscount,
+] : [
+  ...offersByService['remont-pod-klyuch'],
+  ...offersByService['natyazhnye-potolki'],
+  ...offersByService['ustanovka-dverey'],
+  repairDiscount,
+  socialDiscount,
+  { title: 'Поможем выбрать выгоду', text: 'Расскажите о задаче, и менеджер подберёт подходящую акцию для вашего ремонта.' },
+];
+const visibleOffers = compact ? offers.slice(0, 2) : offers;
+const selectedService = getMainService(serviceId)?.title || '';
+const gridClass = `promotions__grid--${visibleOffers.length}`;
+---
+
+<section class:list={['section', 'promotions', compact && 'promotions--compact']} aria-labelledby="promotions-title">
+  <div class="container">
+    <div class="promotions__intro">
+      <div>
+        <div class="sec-head__label">Акции и бонусы</div>
+        <h2 id="promotions-title">Выгода для вашего ремонта</h2>
+      </div>
+      <p>Подберём одно наиболее выгодное предложение после уточнения задачи и замера.</p>
+    </div>
+
+    <div class:list={['promotions__grid', gridClass, 'reveal-stagger']}>
+      {visibleOffers.map((offer) => (
+        <article class="promotion-card">
+          <div class="promotion-card__mark" aria-hidden="true">%</div>
+          <h3>{offer.title}</h3>
+          <p>{offer.text}</p>
+          <button
+            class="promotion-card__link"
+            type="button"
+            data-promo-form
+            data-promo-title={offer.title}
+            data-promo-service={selectedService}
+          >
+            Узнать условия <span aria-hidden="true">→</span>
+          </button>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

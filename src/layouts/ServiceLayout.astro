@@ -4,6 +4,8 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import FormSection from '../components/FormSection.astro';
 import Faq from '../components/Faq.astro';
 import FinalCta from '../components/FinalCta.astro';
+import Promotions from '../components/Promotions.astro';
+import Advantages from '../components/Advantages.astro';
 import { company, SITE_URL } from '../data/company';
 import { getMainService } from '../data/services';
 import { serviceImages } from '../data/examples';
@@ -94,32 +96,41 @@ const ctaLower = service.ctaLabel.charAt(0).toLowerCase() + service.ctaLabel.sli
 
   <!-- Hero -->
   <section class="page-hero">
-    <div class="container">
-      <h1>{service.h1}</h1>
-      <p class="lead">{service.subtitle}</p>
-      {service.priceFrom && (
-        <p class="page-hero__price">Стоимость — {service.priceFrom}</p>
-      )}
-      <div class="page-hero__cta">
-        <button class="btn btn--primary" type="button" data-open-form={service.title}>
-          Рассчитать стоимость
-          <span class="btn__arrow" aria-hidden="true">→</span>
-        </button>
-        <a class="btn btn--ghost" href="#examples">Посмотреть примеры</a>
-      </div>
+    <div class="container page-hero__grid">
+      <div class="page-hero__content">
+        <div class="hero__badge">{company.name} - услуги по ремонту</div>
+        <h1>{service.h1}</h1>
+        <p class="lead">{service.subtitle}</p>
+        {service.priceFrom && (
+          <p class="page-hero__price">Стоимость от {service.priceFrom}</p>
+        )}
+        <div class="page-hero__cta">
+          <button class="btn btn--primary" type="button" data-open-form={service.title}>
+            Рассчитать стоимость
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </button>
+          <a class="btn btn--ghost" href="#examples">Посмотреть примеры</a>
+        </div>
 
-      <div class="hero__facts" aria-label="Преимущества услуги">
-        {
-          service.utp.map((u) => (
-            <div class="hero__fact">
-              <b>{u.title}</b>
-              <span>{u.text}</span>
-            </div>
-          ))
-        }
+        <div class="hero__facts" aria-label="Преимущества услуги">
+          {
+            service.utp.map((u) => (
+              <div class="hero__fact">
+                <b>{u.title}</b>
+                <span>{u.text}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="page-hero__media">
+        <img src={service.image} alt={service.imageAlt} width="1200" height="900" fetchpriority="high" />
       </div>
     </div>
   </section>
+
+  <!-- Акции для направления -->
+  <Promotions serviceId={service.id} />
 
   <!-- Описание услуги -->
   <section class="section">
@@ -242,6 +253,9 @@ const ctaLower = service.ctaLabel.charAt(0).toLowerCase() + service.ctaLabel.sli
       </div>
     </div>
   </section>
+
+  <!-- Преимущества компании -->
+  <Advantages />
 
   <!-- Процесс -->
   <section class="section section--soft">

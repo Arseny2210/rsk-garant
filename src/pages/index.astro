@@ -9,6 +9,8 @@ import FormSection from '../components/FormSection.astro';
 import Faq from '../components/Faq.astro';
 import FinalCta from '../components/FinalCta.astro';
 import Contacts from '../components/Contacts.astro';
+import Promotions from '../components/Promotions.astro';
+import Advantages from '../components/Advantages.astro';
 import { company, SITE_URL } from '../data/company';
 import { mainServices } from '../data/services';
 import { projects, projectImages } from '../data/projects';
@@ -55,7 +57,7 @@ const servicesSchema = {
   <section class="hero">
     <div class="container hero__grid">
       <div>
-        <div class="hero__badge">{company.name} — ремонтно-строительная компания</div>
+        <div class="hero__badge">{company.name} - ремонтно-строительная компания</div>
         <h1>Ремонт квартир и отдельные строительные работы в {company.city}</h1>
         <p>
           Выполняем ремонт под ключ, отделочные и строительные работы.
@@ -168,6 +170,9 @@ const servicesSchema = {
     </div>
   </section>
 
+  <!-- Акции -->
+  <Promotions />
+
   <!-- Портфолио -->
   <section class="section section--soft" id="projects" aria-labelledby="projects-title">
     <div class="container">
@@ -240,6 +245,9 @@ const servicesSchema = {
 
   <!-- Почему РСК Гарант -->
   <WhyUs />
+
+  <!-- Преимущества -->
+  <Advantages />
 
   <!-- Отзывы (скрыт, пока нет реальных отзывов) -->
   <Reviews />

@@ -72,6 +72,9 @@ const allJsonLd = [breadcrumbDefault, orgSchema, websiteSchema, ...jsonLd];
   <meta charset="utf-8" />
   <script>document.documentElement.classList.add("js");</script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -116,6 +119,17 @@ const allJsonLd = [breadcrumbDefault, orgSchema, websiteSchema, ...jsonLd];
   <Footer />
 
   <MobileBottomBar />
+
+  <aside class="promotion-popup" id="promotion-popup" role="dialog" aria-labelledby="promotion-popup-title" hidden>
+    <button class="promotion-popup__close" type="button" data-promotion-close aria-label="Закрыть предложение">×</button>
+    <p class="promotion-popup__eyebrow">Акция для вашей услуги</p>
+    <h2 id="promotion-popup-title"></h2>
+    <p class="promotion-popup__text" id="promotion-popup-text"></p>
+    <button class="btn btn--primary promotion-popup__cta" type="button" data-promotion-cta>
+      Заполнить форму
+      <span class="btn__arrow" aria-hidden="true">→</span>
+    </button>
+  </aside>
 
   <dialog class="lightbox" id="lightbox" aria-label="Просмотр фотографии">
     <div class="lightbox__bar">

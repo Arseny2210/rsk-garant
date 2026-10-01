@@ -346,6 +346,85 @@ doc.querySelectorAll('[data-open-form]').forEach((trigger) => {
   });
 });
 
+/* ---------- акции: передача предложения в форму ---------- */
+function openPromotionForm(service, promotion, source) {
+  const form = doc.querySelector('#lead-form');
+  if (!form) return;
+
+  const serviceInput = form.querySelector('[name="service"]');
+  if (service && serviceInput) serviceInput.value = service;
+
+  const comment = form.querySelector('[name="comment"]');
+  if (promotion && comment && !comment.value.trim()) {
+    comment.value = `Интересует акция: ${promotion}`;
+  }
+
+  form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  window.RSK_TRACK('promotion_form_open', { source, service, promotion });
+}
+
+doc.querySelectorAll('[data-promo-form]').forEach((trigger) => {
+  trigger.addEventListener('click', () => {
+    openPromotionForm(
+      trigger.dataset.promoService || '',
+      trigger.dataset.promoTitle || '',
+      'promotion_section'
+    );
+  });
+});
+
+const popup = doc.getElementById('promotion-popup');
+const popupTitle = doc.getElementById('promotion-popup-title');
+const popupText = doc.getElementById('promotion-popup-text');
+const popupCta = doc.querySelector('[data-promotion-cta]');
+
+const popupOffers = {
+  '/remont-pod-klyuch/': {
+    title: 'Скидка 10 000 ₽ на ремонт под ключ',
+    text: 'Оставьте заявку, и мы рассчитаем стоимость ремонта с учетом акции.',
+    service: 'Ремонт под ключ',
+  },
+  '/natyazhnye-potolki/': {
+    title: 'Скидка на натяжные потолки до 10 000 ₽',
+    text: 'Узнайте размер скидки для вашего помещения после замера.',
+    service: 'Натяжные потолки',
+  },
+  '/ustanovka-dverey/': {
+    title: 'Третья дверь в подарок',
+    text: 'При покупке двух межкомнатных дверей. Оставьте заявку, чтобы узнать условия.',
+    service: 'Установка межкомнатных дверей',
+  },
+};
+
+const defaultPopupOffer = {
+  title: 'Специальные скидки до 25%',
+  text: 'Для пенсионеров, людей с инвалидностью и участников СВО. Оставьте заявку, чтобы уточнить условия.',
+  service: '',
+};
+
+if (popup && doc.querySelector('#lead-form')) {
+  const offer = popupOffers[window.location.pathname] || defaultPopupOffer;
+  if (popupTitle) popupTitle.textContent = offer.title;
+  if (popupText) popupText.textContent = offer.text;
+
+  const showPopup = () => {
+    popup.hidden = false;
+    window.RSK_TRACK('promotion_popup_view', { service: offer.service, promotion: offer.title });
+  };
+
+  window.setTimeout(showPopup, 40000);
+
+  doc.querySelector('[data-promotion-close]')?.addEventListener('click', () => {
+    popup.hidden = true;
+    window.RSK_TRACK('promotion_popup_close', { service: offer.service, promotion: offer.title });
+  });
+
+  popupCta?.addEventListener('click', () => {
+    popup.hidden = true;
+    openPromotionForm(offer.service, offer.title, 'delayed_popup');
+  });
+}
+
 /* ---------- телефонные ссылки ---------- */
 doc.querySelectorAll('a[href^="tel:"]').forEach((link) => {
   link.addEventListener('click', () => {
