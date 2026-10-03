@@ -25,6 +25,9 @@ const offersByService: Record<string, { title: string; text: string }[]> = {
 const repairDiscount = { title: 'Скидка 5% на ремонт под ключ', text: 'Уточните у менеджера, какое предложение будет выгоднее для вашего объекта.' };
 const socialDiscount = { title: 'Специальные скидки до 25%', text: 'Для пенсионеров, людей с инвалидностью и участников СВО.' };
 
+const nbsp = String.fromCharCode(160);
+const glueAmounts = (s: string) => s.replace(/\d+(?: \d+)* ₽/g, (m) => m.split(' ').join(nbsp));
+
 const offers = serviceId ? [
   ...(offersByService[serviceId] || []),
   ...(serviceId === 'remont-pod-klyuch' ? [repairDiscount] : []),
@@ -37,7 +40,7 @@ const offers = serviceId ? [
   socialDiscount,
   { title: 'Поможем выбрать выгоду', text: 'Расскажите о задаче, и менеджер подберёт подходящую акцию для вашего ремонта.' },
 ];
-const visibleOffers = compact ? offers.slice(0, 2) : offers;
+const visibleOffers = (compact ? offers.slice(0, 2) : offers).map((offer) => ({ ...offer, title: glueAmounts(offer.title) }));
 const selectedService = getMainService(serviceId)?.title || '';
 const gridClass = `promotions__grid--${visibleOffers.length}`;
 ---

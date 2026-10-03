@@ -39,7 +39,7 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Ремонтом под ключ',
     priceFrom: 'от 15 000 ₽/м²',
     slug: '/remont-pod-klyuch/',
-    image: '/images/projects/pod-klutch/01.webp',
+    image: '/images/covers/pod-klutch.webp',
     imageAlt: 'Ремонт квартиры под ключ — пример выполненной работы',
     seoTitle: 'Ремонт квартир под ключ в Москве — РСК Гарант',
     metaDescription:
@@ -109,7 +109,7 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Косметическим ремонтом комнаты',
     priceFrom: 'от 3 500 ₽/м²',
     slug: '/kosmeticheskiy-remont-komnaty/',
-    image: '/images/projects/kosmet-rem/01.webp',
+    image: '/images/covers/kosmet-rem.webp',
     imageAlt: 'Косметический ремонт — пример выполненной работы',
     seoTitle: 'Косметический ремонт комнаты в Москве — РСК Гарант',
     metaDescription:
@@ -172,7 +172,7 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Ремонтом санузла',
     priceFrom: 'от 60 000 ₽',
     slug: '/remont-sanuzlov/',
-    image: '/images/projects/sanuzel/01.webp',
+    image: '/images/covers/sanuzel.webp',
     imageAlt: 'Ремонт санузла — пример выполненной работы',
     seoTitle: 'Ремонт санузла в Москве — ремонт ванной и туалета — РСК Гарант',
     metaDescription:
@@ -241,7 +241,7 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Плиточными работами',
     priceFrom: 'от 3 500 ₽/м²',
     slug: '/plitochnye-raboty/',
-    image: '/images/projects/plitka/01.webp',
+    image: '/images/covers/plitka.webp',
     imageAlt: 'Плиточные работы — пример выполненной работы',
     seoTitle: 'Плиточные работы в Москве — укладка плитки — РСК Гарант',
     metaDescription:
@@ -309,7 +309,7 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Оклейкой обоев',
     priceFrom: 'от 450 ₽/м²',
     slug: '/okleyka-oboev/',
-    image: '/images/projects/oboi/01.webp',
+    image: '/images/covers/oboi.webp',
     imageAlt: 'Оклейка обоев — пример выполненной работы',
     seoTitle: 'Оклейка обоев в Москве — поклейка обоев — РСК Гарант',
     metaDescription:
@@ -373,7 +373,7 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Укладкой ламината',
     priceFrom: 'от 600 ₽/м²',
     slug: '/ukladka-laminata/',
-    image: '/images/projects/laminat/01.webp',
+    image: '/images/covers/laminat.webp',
     imageAlt: 'Укладка ламината — пример выполненной работы',
     seoTitle: 'Укладка ламината в Москве — РСК Гарант',
     metaDescription:
@@ -439,7 +439,7 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Натяжными потолками',
     priceFrom: 'от 390 ₽/м²',
     slug: '/natyazhnye-potolki/',
-    image: '/images/projects/nat-potolki/01.webp',
+    image: '/images/covers/nat-potolki.webp',
     imageAlt: 'Натяжные потолки — пример выполненной работы',
     seoTitle: 'Натяжные потолки в Москве — установка — РСК Гарант',
     metaDescription:
@@ -503,7 +503,7 @@ export const mainServices: MainService[] = [
     ctaLabel: 'Установкой дверей',
     priceFrom: 'от 4 000 ₽',
     slug: '/ustanovka-dverey/',
-    image: '/images/projects/dveri/01.webp',
+    image: '/images/covers/dveri.webp',
     imageAlt: 'Установка дверей — пример выполненной работы',
     seoTitle: 'Установка межкомнатных дверей в Москве — РСК Гарант',
     metaDescription:

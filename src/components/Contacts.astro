@@ -53,6 +53,12 @@ const address = company.address !== '[ADDRESS]' ? company.address : '';
             {company.cityNominative} и {company.region}
           </span>
         </li>
+        {company.workingHours && (
+          <li>
+            <span class="contacts-list__label">График работы</span>
+            <span class="contacts-list__value">{company.workingHours}</span>
+          </li>
+        )}
         {address && (
           <li>
             <span class="contacts-list__label">Адрес</span>

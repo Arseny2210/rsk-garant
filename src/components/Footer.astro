@@ -54,6 +54,7 @@ const address = company.address !== '[ADDRESS]' ? company.address : '';
           <li><a href={company.whatsapp} target="_blank" rel="noopener">WhatsApp</a></li>
           <li><a href={company.telegram} target="_blank" rel="noopener">Telegram</a></li>
           {address && <li>{address}</li>}
+          {company.workingHours && <li>График работы: {company.workingHours}</li>}
           <li>{company.cityNominative} и {company.region}</li>
         </ul>
       </div>
@@ -65,15 +66,6 @@ const address = company.address !== '[ADDRESS]' ? company.address : '';
         <ul style="display:flex; gap:1.5rem; flex-wrap:wrap;">
           <li><a href="/privacy/">Политика конфиденциальности</a></li>
           <li><a href="/#contacts">Контакты</a></li>
-          <li>
-            <a
-              href="https://commons.wikimedia.org/wiki/File:Modern_living_room_with_stylish_furniture_and_a_view_of_the_outdoors_in_a_cozy_apartment_setting.jpg"
-              target="_blank"
-              rel="noopener"
-            >
-              Фото интерьера на главной: Shixart1985 / Wikimedia Commons (CC BY 2.0)
-            </a>
-          </li>
         </ul>
       </nav>
     </div>

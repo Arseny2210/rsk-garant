@@ -20,7 +20,8 @@ console.log(`Карточек на главной: ${n}`);
 for (let i = 0; i < n; i++) {
   const card = cards.nth(i);
   const title = (await card.locator('h3').textContent()).trim();
-  await card.locator('.project-card__media').click();
+  // клик по заголовку — раньше перехватывался .project-card__info
+  await card.locator('h3').click();
   await page.waitForTimeout(250);
   const open = await page.evaluate(() => document.getElementById('lightbox').open);
   const counter = open ? (await page.locator('#lightbox-counter').textContent()).trim() : '—';
@@ -42,6 +43,27 @@ for (let i = 0; i < n; i++) {
 }
 
 if (errors.length) console.log('Ошибки JS:', errors);
+
+/* ---------- доступность и affordance карточек ---------- */
+{
+  const badge = await page.locator('.project-card__gallery').first().isVisible();
+  const hint = await page.locator('.project-card__hint').first().isVisible();
+  console.log(`${badge ? 'OK  ' : 'FAIL'} | бейдж «N фото» виден`);
+  console.log(`${hint ? 'OK  ' : 'FAIL'} | подсказка «Открыть галерею» в DOM`);
+  if (!badge || !hint) fail++;
+
+  // клавиатура: Enter на карточке открывает лайтбокс
+  await page.locator('.project-card').first().focus();
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(250);
+  const kbOpen = await page.evaluate(() => document.getElementById('lightbox').open);
+  console.log(`${kbOpen ? 'OK  ' : 'FAIL'} | карточка открывается с клавиатуры (Enter)`);
+  if (!kbOpen) fail++;
+  if (kbOpen) {
+    await page.locator('[data-lightbox-close]').click();
+    await page.waitForTimeout(150);
+  }
+}
 
 /* ---------- страницы категорий: один article со всеми фото ---------- */
 const CATEGORY_TESTS = [

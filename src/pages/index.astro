@@ -180,41 +180,67 @@ const servicesSchema = {
         <div>
           <div class="sec-head__label">Работы</div>
           <h2 id="projects-title">Наши работы</h2>
-          <p>Примеры выполненных работ по разным направлениям.</p>
+          <p>Нажмите на фото — откроется галерея с примерами работ.</p>
         </div>
       </div>
 
       <div class="portfolio-grid reveal-stagger">
         {
-          projects.slice(0, 12).map((p, i) => (
-            <article
-              class={'project-card' + (i === 0 ? ' project-card--lg' : i === 1 ? ' project-card--sm' : '')}
-              data-portfolio
-            >
-              <div
-                class="project-card__media"
+          projects.slice(0, 12).map((p, i) => {
+            const images = projectImages(p);
+            return (
+              <article
+                class={'project-card' + (i === 0 ? ' project-card--lg' : i === 1 ? ' project-card--sm' : '')}
+                data-portfolio
                 data-lightbox
                 data-gallery={p.id}
-                data-gallery-images={JSON.stringify(projectImages(p))}
+                data-gallery-images={JSON.stringify(images)}
                 data-caption={p.title}
+                tabindex="0"
+                role="button"
+                aria-label={`${p.title} — открыть галерею из ${images.length} фото`}
               >
-                <img src={p.image} alt={p.alt} loading="lazy" width="1200" height="1600" />
-              </div>
-              <div class="project-card__info">
-                <div class="work-type">{p.workType}</div>
-                <h3>{p.title}</h3>
-                {
-                  (p.area || p.city || p.duration) && (
-                    <div class="project-card__meta">
-                      {p.area && <span>{p.area}</span>}
-                      {p.city && <span>{p.city}</span>}
-                      {p.duration && <span>{p.duration}</span>}
-                    </div>
-                  )
-                }
-              </div>
-            </article>
-          ))
+                <div class="project-card__media">
+                  <img src={p.image} alt={p.alt} loading="lazy" width="1200" height="1600" />
+                  <span class="project-card__hint" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"
+                        stroke="currentColor"
+                        stroke-width="1.9"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    </svg>
+                    <span>Открыть галерею</span>
+                  </span>
+                  {images.length > 1 && (
+                    <span class="project-card__gallery">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="3" y="4" width="13" height="13" rx="2.5" stroke="currentColor" stroke-width="1.7" />
+                        <path d="M8 20h10a3 3 0 0 0 3-3V8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                        <circle cx="8.3" cy="9.3" r="1.5" fill="currentColor" />
+                        <path d="m3 13 3.1-3.1a1.6 1.6 0 0 1 2.3 0L15 16.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <span>{images.length} фото</span>
+                    </span>
+                  )}
+                </div>
+                <div class="project-card__info">
+                  <div class="work-type">{p.workType}</div>
+                  <h3>{p.title}</h3>
+                  {
+                    (p.area || p.city || p.duration) && (
+                      <div class="project-card__meta">
+                        {p.area && <span>{p.area}</span>}
+                        {p.city && <span>{p.city}</span>}
+                        {p.duration && <span>{p.duration}</span>}
+                      </div>
+                    )
+                  }
+                </div>
+              </article>
+            );
+          })
         }
       </div>
     </div>

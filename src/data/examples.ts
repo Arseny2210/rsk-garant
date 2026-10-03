@@ -21,5 +21,8 @@ export function serviceImages(serviceId: string): ExampleImage[] {
   const folder = SERVICE_FOLDER[serviceId];
   const project = projects.find((p) => p.id === folder);
   if (!project) return [];
-  return projectImages(project).map((src) => ({ src, alt: project.alt }));
+  return projectImages(project).map((src, i) => ({
+    src,
+    alt: `${project.alt} — фото ${i + 1}`,
+  }));
 }

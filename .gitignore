@@ -17,3 +17,6 @@ dist
 # Исходные фото (6 ГБ) — вне сборки и репозитория
 _source/
 public/remont-img/
+
+# Бэкап до оптимизации изображений (scripts/optimize-images.mjs)
+.img-backup/

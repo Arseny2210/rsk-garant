@@ -187,6 +187,8 @@ const lbCounter = doc.getElementById('lightbox-counter');
 const lbDots = doc.getElementById('lightbox-dots');
 const lbPrev = doc.querySelector('[data-lightbox-prev]');
 const lbNext = doc.querySelector('[data-lightbox-next]');
+const lbProgress = doc.getElementById('lightbox-progress');
+const lbProgressBar = doc.getElementById('lightbox-progress-bar');
 
 const galleries = new Map();
 
@@ -236,6 +238,15 @@ doc.querySelectorAll('[data-lightbox]').forEach((trigger) => {
       if (typeof lightbox.showModal === 'function') lightbox.showModal();
     }
   });
+
+  // карточка/плитка с role="button" должна открываться с клавиатуры
+  if (trigger.getAttribute('role') === 'button') {
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      trigger.click();
+    });
+  }
 });
 
 function openLightbox(item, list) {
@@ -252,6 +263,18 @@ function openLightbox(item, list) {
   }
 }
 
+function fitLightbox() {
+  if (!lightbox || !lbImg) return;
+  const nw = lbImg.naturalWidth;
+  const nh = lbImg.naturalHeight;
+  if (!nw || !nh) return;
+  const padX = 40; // .lightbox__stage padding-inline: 1.25rem * 2
+  const availH = window.innerHeight - 192; // 12rem под бар и точки
+  const availW = Math.min(1180, window.innerWidth - 24) - padX;
+  const scale = Math.min(1, availH / nh, availW / nw);
+  lightbox.style.width = `${Math.round(nw * scale + padX)}px`;
+}
+
 function renderLightbox() {
   const list = window._lbList || [];
   const index = window._lbIndex;
@@ -260,6 +283,11 @@ function renderLightbox() {
   lbImg.src = item.src;
   lbImg.alt = item.alt || '';
   if (lbCaption) lbCaption.textContent = item.caption || '';
+
+  // подгоняем ширину окна под текущее фото — портретные снимки
+  // не должны оставлять большие пустые поля по бокам
+  lbImg.onload = fitLightbox;
+  if (lbImg.complete && lbImg.naturalWidth) fitLightbox();
 
   if (lbCounter) {
     lbCounter.textContent = list.length ? `${index + 1} / ${list.length}` : '';
@@ -278,23 +306,24 @@ function renderLightbox() {
     });
   }
 
+  // Во всех галереях используем единую полосу прогресса: она одинаково читается
+  // и для коротких подборок, например «Ремонт санузла», и для больших серий.
   if (lbDots) {
     lbDots.innerHTML = '';
-    if (list.length > 1) {
-      list.forEach((it, i) => {
-        const dot = doc.createElement('button');
-        dot.type = 'button';
-        dot.className = 'lightbox__dot' + (i === index ? ' is-active' : '');
-        dot.setAttribute('aria-label', `Фото ${i + 1} из ${list.length}`);
-        dot.addEventListener('click', () => {
-          window._lbIndex = i;
-          renderLightbox();
-        });
-        lbDots.appendChild(dot);
-      });
-      lbDots.style.display = '';
-    } else {
-      lbDots.style.display = 'none';
+    lbDots.style.display = 'none';
+  }
+
+  if (lbProgress && lbProgressBar) {
+    const hasGallery = list.length > 1;
+    lbProgress.hidden = !hasGallery;
+    if (hasGallery) {
+      const pct = ((index + 1) / list.length) * 100;
+      lbProgressBar.style.width = `${pct}%`;
+      lbProgress.setAttribute('role', 'progressbar');
+      lbProgress.setAttribute('aria-valuemin', '1');
+      lbProgress.setAttribute('aria-valuemax', String(list.length));
+      lbProgress.setAttribute('aria-valuenow', String(index + 1));
+      lbProgress.setAttribute('aria-label', `Фото ${index + 1} из ${list.length}`);
     }
   }
 }
@@ -325,11 +354,44 @@ lightbox?.addEventListener('click', (e) => {
 
 lightbox?.addEventListener('close', () => {
   body.style.overflow = '';
+  lightbox.style.width = '';
   window._lbList = null;
 });
 
+// свайп по фото — листание на тач-устройствах
+const lbStage = doc.querySelector('.lightbox__stage');
+let touchX = null;
+let touchY = null;
+lbStage?.addEventListener(
+  'touchstart',
+  (e) => {
+    const t = e.changedTouches[0];
+    touchX = t.clientX;
+    touchY = t.clientY;
+  },
+  { passive: true }
+);
+lbStage?.addEventListener(
+  'touchend',
+  (e) => {
+    if (touchX === null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchX;
+    const dy = t.clientY - touchY;
+    touchX = null;
+    touchY = null;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy)) stepLightbox(dx < 0 ? 1 : -1);
+  },
+  { passive: true }
+);
+
+window.addEventListener('resize', () => {
+  if (lightbox?.open) fitLightbox();
+});
+
 doc.querySelectorAll('[data-lightbox]').forEach((t) => {
-  t.setAttribute('title', 'Открыть фото');
+  const multi = t.dataset.galleryImages || t.dataset.gallery;
+  t.setAttribute('title', multi ? 'Открыть галерею' : 'Открыть фото');
 });
 
 /* ---------- скролл к форме ---------- */
@@ -378,6 +440,9 @@ const popupTitle = doc.getElementById('promotion-popup-title');
 const popupText = doc.getElementById('promotion-popup-text');
 const popupCta = doc.querySelector('[data-promotion-cta]');
 
+const nbsp = String.fromCharCode(160);
+const glueAmounts = (s) => s.replace(/\d+(?: \d+)* ₽/g, (m) => m.split(' ').join(nbsp));
+
 const popupOffers = {
   '/remont-pod-klyuch/': {
     title: 'Скидка 10 000 ₽ на ремонт под ключ',
@@ -404,7 +469,7 @@ const defaultPopupOffer = {
 
 if (popup && doc.querySelector('#lead-form')) {
   const offer = popupOffers[window.location.pathname] || defaultPopupOffer;
-  if (popupTitle) popupTitle.textContent = offer.title;
+  if (popupTitle) popupTitle.textContent = glueAmounts(offer.title);
   if (popupText) popupText.textContent = offer.text;
 
   const showPopup = () => {

@@ -24,6 +24,12 @@ const {
 const url = new URL(Astro.url.pathname, SITE_URL).toString();
 const canonical = url.endsWith('/') ? url : url + '/';
 
+/** Код подтверждения из Яндекс.Вебмастера. */
+const yandexVerification = '9968d6763f16cfc5';
+const robotsMeta = noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
 const breadcrumbDefault = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -37,15 +43,31 @@ const orgSchema = {
   '@type': 'HomeAndConstructionBusiness',
   '@id': SITE_URL + '/#organization',
   name: company.name,
+  ...(company.legalName !== '[LEGAL_NAME]' ? { legalName: company.legalName } : {}),
+  ...(company.inn !== '[INN]' ? { taxID: company.inn } : {}),
   url: SITE_URL,
   telephone: company.phone.replace(/[^+\d]/g, ''),
   email: company.email,
   address: {
     '@type': 'PostalAddress',
-    addressLocality: company.cityNominative,
+    postalCode: company.postalCode || undefined,
+    addressLocality: company.addressLocality || company.cityNominative,
     addressRegion: company.region,
-    streetAddress: company.address !== '[ADDRESS]' ? company.address : undefined,
+    addressCountry: 'RU',
+    streetAddress: company.streetAddress || undefined,
   },
+  ...(company.workingHoursSpec
+    ? {
+        openingHoursSpecification: [
+          {
+            '@type': 'OpeningHoursSpecification',
+            opens: company.workingHoursSpec.opens,
+            closes: company.workingHoursSpec.closes,
+            dayOfWeek: company.workingHoursSpec.dayOfWeek,
+          },
+        ],
+      }
+    : {}),
   areaServed: [company.cityNominative, company.region],
   image: SITE_URL + image,
   priceRange: '₽₽',
@@ -77,8 +99,8 @@ const allJsonLd = [breadcrumbDefault, orgSchema, websiteSchema, ...jsonLd];
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={canonical} />
-  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  {!noindex && <link rel="canonical" href={canonical} />}
+  <meta name="robots" content={robotsMeta} />
 
   <meta name="theme-color" content="#f5f3ee" />
   <meta name="format-detection" content="telephone=no" />
@@ -91,15 +113,19 @@ const allJsonLd = [breadcrumbDefault, orgSchema, websiteSchema, ...jsonLd];
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={SITE_URL + image} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={SITE_URL + image} />
+  <meta name="twitter:image:alt" content={title} />
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-  <meta name="yandex-verification" content="" />
+  {yandexVerification && <meta name="yandex-verification" content={yandexVerification} />}
 
   {allJsonLd.map((schema) => (
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
@@ -144,6 +170,9 @@ const allJsonLd = [breadcrumbDefault, orgSchema, websiteSchema, ...jsonLd];
       <img id="lightbox-img" src="" alt="" />
       <span class="lightbox__counter" id="lightbox-counter"></span>
       <div class="lightbox__dots" id="lightbox-dots" aria-label="Навигация по фото"></div>
+      <div class="lightbox__progress" id="lightbox-progress" hidden>
+        <span class="lightbox__progress-bar" id="lightbox-progress-bar"></span>
+      </div>
     </figure>
     <button
       class="lightbox__nav lightbox__nav--prev"

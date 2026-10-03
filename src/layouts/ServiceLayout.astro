@@ -102,7 +102,7 @@ const ctaLower = service.ctaLabel.charAt(0).toLowerCase() + service.ctaLabel.sli
         <h1>{service.h1}</h1>
         <p class="lead">{service.subtitle}</p>
         {service.priceFrom && (
-          <p class="page-hero__price">Стоимость от {service.priceFrom}</p>
+          <p class="page-hero__price">Стоимость {service.priceFrom}</p>
         )}
         <div class="page-hero__cta">
           <button class="btn btn--primary" type="button" data-open-form={service.title}>
@@ -213,8 +213,22 @@ const ctaLower = service.ctaLabel.charAt(0).toLowerCase() + service.ctaLabel.sli
                     data-lightbox
                     data-gallery={service.id}
                     data-caption={`${service.title} — пример работы`}
+                    tabindex="0"
+                    role="button"
+                    aria-label={`Открыть фото ${i + 1} из ${examples.length}`}
                   >
                     <img src={img.src} alt={img.alt} loading="lazy" width="705" height="527" />
+                    <span class="example-tile__hint" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none">
+                        <path
+                          d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"
+                          stroke="currentColor"
+                          stroke-width="1.9"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
                   </div>
                 ))
               }

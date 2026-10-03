@@ -10,6 +10,9 @@ const description =
 const privacyEmail =
   company.privacyEmail !== '[PRIVACY_EMAIL]' ? company.privacyEmail : company.email;
 const operatorAddress = company.address !== '[ADDRESS]' ? company.address : '—';
+const hasLegalName = company.legalName !== '[LEGAL_NAME]';
+const hasInn = company.inn !== '[INN]';
+const hasOgrn = company.ogrn !== '[OGRN]';
 ---
 
 <BaseLayout title={title} description={description}>
@@ -26,14 +29,14 @@ const operatorAddress = company.address !== '[ADDRESS]' ? company.address : '—
         <h2>1. Общие положения</h2>
         <p>
           Настоящая Политика определяет порядок и условия обработки персональных данных
-          компанией {company.name} (далее — Оператор), а также меры, принимаемые Оператором
+          компанией {company.name}{hasLegalName ? ` (${company.legalName})` : ''} (далее — Оператор), а также меры, принимаемые Оператором
           для защиты персональных данных.
         </p>
         <p>Сведения об Операторе:</p>
         <ul>
-          <li>Наименование: {company.legalName}</li>
-          <li>ИНН: {company.inn}</li>
-          <li>ОГРН: {company.ogrn}</li>
+          {hasLegalName && <li>Наименование: {company.legalName}</li>}
+          {hasInn && <li>ИНН: {company.inn}</li>}
+          {hasOgrn && <li>ОГРНИП: {company.ogrn}</li>}
           <li>Регион работ: {company.cityNominative} и {company.region}</li>
           <li>
             Адрес: {operatorAddress}
@@ -424,9 +427,9 @@ const operatorAddress = company.address !== '[ADDRESS]' ? company.address : '—
           или удаления данных следует обращаться:
         </p>
         <ul>
-          <li>Оператор: {company.legalName}</li>
-          <li>ИНН: {company.inn}</li>
-          <li>ОГРН: {company.ogrn}</li>
+          {hasLegalName && <li>Оператор: {company.legalName}</li>}
+          {hasInn && <li>ИНН: {company.inn}</li>}
+          {hasOgrn && <li>ОГРНИП: {company.ogrn}</li>}
           <li>Регион работ: {company.cityNominative} и {company.region}</li>
           <li>Телефон: <a href={company.phoneHref}>{company.phone}</a></li>
           <li>Дополнительный телефон: <a href={company.phoneAltHref}>{company.phoneAlt}</a></li>
